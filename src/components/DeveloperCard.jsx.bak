@@ -1,0 +1,70 @@
+import React, { useEffect, useRef } from "react";
+
+export default function DeveloperCard() {
+  const wrapperRef = useRef(null);
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    let rafId = null;
+    let last = performance.now();
+    let angle = 0;
+    const speed = 28; // degrees per second
+
+    const tick = (now) => {
+      const dt = (now - last) / 1000;
+      last = now;
+      angle = (angle + speed * dt) % 360;
+      el.style.setProperty("--orbit-rot", `${angle}deg`);
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+
+    const txt = textRef.current;
+    if (txt) {
+      txt.classList.remove("meet-dev-animate");
+      void txt.offsetWidth;
+      txt.classList.add("meet-dev-animate");
+    }
+
+    return () => {
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
+  return (
+    <article
+      className="s-card developer-card meet-developer-orbit-text"
+      id="developerCard"
+      tabIndex={0}
+      aria-labelledby="dev-title"
+      ref={wrapperRef}
+    >
+      <div
+        className="s-card-media dev-photo"
+        role="img"
+        aria-label="Developer photo"
+        style={{ backgroundImage: "url('/assets/dev-photo.png')" }}
+      />
+      <div className="s-card-body">
+        <h5 id="dev-title">Meet the developer</h5>
+
+        <div className="meet-dev-text-wrap">
+          <div className="meet-dev-text" ref={textRef}>
+            <p className="developer__intro meet-dev-copy">
+              <strong>ZEAL</strong> — We build trust into every pixel and craft platforms that feel expensive, move fast, and scale cleanly. From glowing brand visuals to disciplined engineering, we design and develop premium websites, apps, and onboarding flows that speak your customer’s language and strengthen your brand’s authority.
+            </p>
+            <a href="#contact" className="btn btn--secondary book-consult">Book a Free Consultation</a>
+          </div>
+
+          <div className="text-orbit" aria-hidden="true">
+            <div className="text-orbit-path" />
+            <div className="text-orbit-orb" />
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}

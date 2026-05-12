@@ -1,0 +1,48 @@
+import React, { useContext } from "react";
+import { UiContext } from "../contexts/UiContext";
+
+export default function Header() {
+  const { exploreOpen, setExploreOpen } = useContext(UiContext);
+
+  return (
+    <header className="zeal-header" role="navigation" aria-label="Main navigation">
+      <div className="container zeal-nav">
+        <div className="nav-left">
+          <a className="nav-link" href="/">Home</a>
+          <a className="nav-link" href="#about">About</a>
+        </div>
+
+        {/* Accessible logo placeholder: no visible ZEAL text */}
+        <a className="nav-logo" href="/" aria-label="ZEAL home" title="ZEAL home">
+          <svg width="110" height="28" viewBox="0 0 110 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stopColor="#c9a84c"/>
+                <stop offset="1" stopColor="#ffffff"/>
+              </linearGradient>
+            </defs>
+            <rect width="110" height="28" rx="6" fill="rgba(255,255,255,0.02)"/>
+            <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontFamily="Inter, Arial, sans-serif" fontWeight="700" fontSize="12" fill="url(#g)"> </text>
+          </svg>
+        </a>
+
+        <div className="nav-right">
+          <a className="trust-link" href="#contact" aria-label="Book a demo">Book a demo</a>
+
+          <button
+            id="exploreToggle"
+            className={`hamburger ${exploreOpen ? "is-open" : ""}`}
+            aria-label="Toggle Explore Menu"
+            aria-expanded={exploreOpen}
+            type="button"
+            onClick={() => setExploreOpen(!exploreOpen)}
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+    </header>
+  );
+}

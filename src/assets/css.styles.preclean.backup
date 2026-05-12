@@ -1,0 +1,2604 @@
+/* paste your full original inline CSS here */
+:root{--orb-size:680px;--max-width:1200px;--gold:#ffd54f;--bg-dark:#0d052d;}
+
+  <!-- Inline CSS (consolidated and fixed) -->
+  <style>
+    :root {
+      --orb-size: 680px;
+      --max-width: 1200px;
+      --gold: #ffd54f;
+      --bg-dark: #0d052d;
+    }
+
+    /* Base */
+    * { box-sizing: border-box; }
+    html,body { height:100%; margin:0; font-family: Inter, "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:#070417; color:#fff; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Header */
+    .zeal-header, header.nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 2200;
+      display:flex;
+      align-items:center;
+      padding: 1rem 2%;
+      background: transparent;
+    }
+    .zeal-nav { display:flex; align-items:center; width:100%; gap:1rem; }
+    .nav-left { display:flex; gap:1rem; align-items:center; }
+    .nav-link { color: rgba(255,255,255,0.9); text-decoration:none; font-weight:600; }
+    .nav-logo, .nav__logo, .nav_logo { margin-left:auto; font-family: 'Anton', sans-serif; color: var(--gold); letter-spacing: .06em; font-size:1.05rem; }
+    .hamburger, .explore-trigger {
+      background:transparent; border:1px solid rgba(255,255,255,0.12); color:rgba(255,255,255,0.95);
+      padding:0.45rem 0.9rem; border-radius:8px; cursor:pointer; font-weight:700;
+    }
+    .hamburger span { display:block; width:20px; height:2px; background:#fff; margin:3px 0; transition: transform .28s, opacity .18s; }
+
+    /* Hero */
+    .zeal-hero, .hero--luxury {
+      position: relative;
+      min-height: 75vh;
+      display:flex;
+      align-items:center;
+      padding: 6rem 4% 2rem;
+      overflow:hidden;
+    }
+    .hero-content, .hero__inner { z-index: 3; max-width: 900px; margin: 0 auto; text-align:center; }
+    .hero-title, .hero__title {
+      font-family: 'Anton', sans-serif;
+      color: var(--gold);
+      font-size: clamp(2.8rem, 6vw, 4rem);
+      line-height: 1.02;
+      margin: 0 0 .6rem;
+      text-shadow: 0 0 18px rgba(255,213,79,0.35);
+    }
+    .hero-subtitle, .hero__subtitle {
+      font-family: 'Montserrat', sans-serif;
+      color: rgba(255,255,255,0.92);
+      max-width: 720px;
+      line-height: 1.6;
+      margin: 0 auto;
+    }
+
+
+    /* Sections */
+    .section { background:#fff; color:#0d052d; border-radius:20px; box-shadow:0 20px 40px rgba(0,0,0,0.1); padding:3rem 2rem; margin:2rem auto; max-width:var(--max-width); }
+    .section--light { background:#f9f9ff; color:#0d052d; }
+    .section--dark { background:var(--bg-dark); color:#fff; }
+    .section__title { text-align:center; text-transform:uppercase; font-family:'Anton',sans-serif; letter-spacing:0.05em; margin-bottom:2rem; color:var(--gold); }
+
+    /* Grids */
+    .grid { display:grid; gap:1.25rem; }
+    .grid--3cols { grid-template-columns: repeat(3, 1fr); }
+    .grid--4cols { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width:900px) { .grid--3cols { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width:700px) { .grid--3cols { grid-template-columns: 1fr; } .hero-bg { display:none; } }
+
+    /* Cards */
+    .card, .highlight-card, .s-card { background:inherit; border-radius:12px; padding:1.25rem; box-shadow:0 12px 36px rgba(2,6,23,0.06); transition:transform .2s, box-shadow .2s; min-width:0; }
+    .card:hover, .highlight-card:hover { transform:translateY(-4px); box-shadow:0 8px 30px rgba(0,0,0,0.12); }
+
+    /* Highlights */
+    .highlight-card .card__title, .card__title { margin:0 0 .5rem; font-weight:700; }
+    .card__text { margin:0; line-height:1.5; color:rgba(255,255,255,0.92); }
+
+    /* Testimonial slider */
+    .testimonial-slider { position:relative; overflow:hidden; padding:1rem 0; }
+    .testimonial { opacity:0; transition:opacity .5s ease; }
+    .testimonial.active { opacity:1; }
+    .testimonial footer { margin-top:.75rem; color:rgba(255,255,255,0.7); font-size:.95rem; }
+
+
+    /* Explore / Mega menu */
+    .explore-panel {
+      position: fixed;
+      inset: 0;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding-top:72px;
+      background: rgba(6,6,12,0.45);
+      backdrop-filter: blur(6px);
+      opacity:0;
+      pointer-events:none;
+      transform: translateY(-6px);
+      transition: opacity .26s ease, transform .26s ease;
+      z-index:3000;
+    }
+    .explore-panel.open { opacity:1; pointer-events:auto; transform: translateY(0); }
+    .explore-inner {
+      width: min(1100px, 96%);
+      background: linear-gradient(180deg, rgba(10,8,20,0.98), rgba(8,6,18,0.96));
+      border-radius: 14px;
+      box-shadow: 0 18px 48px rgba(2,6,23,0.6);
+      overflow: hidden;
+      max-height: calc(100vh - 96px);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .explore-close { position:absolute; top:12px; right:12px; background:transparent; border:0; color:#fff; font-size:28px; padding:8px; cursor:pointer; }
+    .mega-inner { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; padding:1rem 2rem; color:#ddd; max-width:1200px; margin:0 auto; }
+    .mega-column h4 { cursor:pointer; color:var(--gold); margin:0 0 .5rem; font-family:'Anton',sans-serif; }
+    .mega-list { margin:0; padding:0; list-style:none; }
+    .mega-list li { margin:0 0 .5rem; }
+    .mega-list a, .mega-list button { color:#eaeaea; text-decoration:none; background:transparent; border:0; padding:0; cursor:pointer; }
+
+    @media (max-width:900px) {
+      .explore-inner { width:100%; height:100%; border-radius:0; max-height:100vh; padding-top:56px; }
+      .explore-panel { padding-top:0; align-items:stretch; }
+      .mega-inner { grid-template-columns: 1fr; }
+    }
+
+        /* Slider container */
+.services-slider { display:flex; align-items:center; gap:0.75rem; position:relative; }
+.slider-track-wrap { overflow:hidden; flex:1 1 auto; }
+.slider-track {
+  display:flex;
+  gap:1rem;
+  transition: transform .36s cubic-bezier(.22,.9,.3,1);
+  will-change: transform;
+  padding:0;
+  margin:0;
+  list-style:none;
+}
+
+/* Each slide */
+.slide { flex: 0 0 calc(33.333% - 0.666rem); min-width: calc(33.333% - 0.666rem); display:flex; }
+@media (max-width:900px) { .slide { flex:0 0 calc(50% - 0.5rem); min-width: calc(50% - 0.5rem); } }
+@media (max-width:600px) { .slide { flex:0 0 calc(100% - 0.5rem); min-width: calc(100% - 0.5rem); } }
+
+/* Card inside slide */
+.slide .card { width:100%; display:flex; flex-direction:column; gap:.6rem; padding:1rem; }
+
+/* Buttons */
+.slider-btn { background: rgba(13,5,45,0.9); color:#fff; border:1px solid rgba(255,255,255,0.06); padding:.6rem .8rem; border-radius:8px; cursor:pointer; flex:0 0 auto; }
+.slider-btn:focus { outline:3px solid rgba(255,213,79,0.14); outline-offset:3px; }
+
+/* Dots */
+.slider-dots { display:flex; gap:.5rem; justify-content:center; margin-top:1rem; }
+.slider-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.18); cursor:pointer; border:0; }
+.slider-dot.active { background:var(--gold); box-shadow:0 6px 18px rgba(255,213,79,0.12); }
+
+/* Prevent text selection while dragging */
+.slider-track, .slider-track * { user-select:none; -webkit-user-select:none; -ms-user-select:none; }
+]
+/* Small visual polish */
+.slide:focus { outline: 3px solid rgba(255,213,79,0.12); outline-offset:6px; }
+
+
+/* Make testimonial author visible on light and dark sections */
+.testimonial footer {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.72); /* default for dark sections */
+}
+
+/* When testimonials sit inside a light section, use a dark author color */
+.section--light .testimonial footer {
+  color: rgba(13,5,45,0.78); /* dark navy for contrast on light background */
+}
+.testimonial footer {
+  border-top: 1px solid rgba(255,255,255,0.04);
+  padding-top: 0.5rem;
+  color: rgba(255,255,255,0.72);
+  font-style: normal;
+}
+.section--light .testimonial footer {
+  border-top-color: rgba(13,5,45,0.04);
+}
+/* Ensure readable text on the light Services section */
+#services.section--light,
+#services.section--light .container,
+#services.section--light .card,
+#services.section--light .card * {
+  color: inherit;
+}
+
+/* Force readable title and body text for cards in the light section */
+#services.section--light .card__title,
+#services.section--light .card__text {
+  color: #0d052d !important; /* dark navy for strong contrast */
+}
+
+/* Make icons visible on light background */
+#services.section--light .card__icon {
+  color: #ffd54f !important; /* gold accent */
+}
+
+/* If buttons or links inside cards are invisible, ensure contrast */
+#services.section--light a,
+#services.section--light .s-btn,
+#services.section--light button {
+  color: #eeecf6 !important;
+}
+
+
+    /* Footer */
+    footer.footer { display:flex; align-items:center; justify-content:center; padding:2rem 1rem; background:transparent; color:rgba(255,255,255,0.85); text-align:center; }
+    footer.footer .footer__inner { width:100%; max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1rem; flex-wrap:wrap; }
+
+    /* Utility */
+    .container { width:100%; max-width:var(--max-width); margin:0 auto; padding:0 1rem; min-width:0; }
+    .btn { display:inline-block; padding:.75rem 1.1rem; border-radius:10px; text-decoration:none; min-height:44px; line-height:1; }
+    .btn--light { background:var(--gold); color:#0d052d; font-weight:700; }
+    .btn--secondary { background:transparent; border:1px solid rgba(255,255,255,0.08); color:#fff; }
+
+    /* Accessibility focus */
+    .explore-inner :focus, a:focus, button:focus { outline:3px solid rgba(255,213,79,0.14); outline-offset:3px; }
+
+    /* Small tweaks */
+    @media (max-width:480px) {
+      .nav-left { display:none; }
+      .hero-title { font-size: clamp(2rem, 8vw, 2.6rem); }
+    }
+
+
+
+/* --- Mega footer controls and Back button (merge after existing explore styles) --- */
+.mega-footer-controls {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem 2rem 0 2rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: 0.75rem;
+  color: #ddd;
+}
+
+/* Back button styling (matches explore-close tone) */
+.explore-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  padding: 0.45rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+.explore-back[hidden] { display: none; }
+.explore-back:hover { color: var(--gold); border-color: var(--gold); }
+.explore-back:focus { outline: 3px solid rgba(255,213,79,0.14); outline-offset: 3px; }
+
+/* Catalogue link styling consistent with mega-list links */
+.catalogue-link {
+  text-decoration: none;
+  padding: 0.45rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.08);
+  color: #fff;
+  background: transparent;
+}
+.catalogue-link:hover { background: rgba(255,255,255,0.05); color: var(--gold); }
+
+/* Responsive: stack footer controls on small screens */
+@media (max-width:900px) {
+  .mega-footer-controls {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0.75rem 1rem;
+  }
+  .catalogue-link { text-align: center; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- Position hero content bottom-left --- */
+.zeal-hero .hero-content,
+.hero--luxury .hero-content {
+  position: absolute;
+  bottom: 2.5rem;      /* distance from bottom of hero */
+  left: 4%;            /* aligns with your global padding */
+  text-align: centre;
+  margin: 0;
+  max-width: 420px;    /* keeps text readable and elegant */
+  z-index: 3;
+}
+
+/* Make hero taller so the bottom-left text has breathing room */
+.zeal-hero, .hero--luxury {
+  min-height: 85vh;    /* previously 75vh */
+  padding-top: 6rem;   /* keep your top spacing */
+  padding-bottom: 0;   /* bottom is now controlled by absolute positioning */
+}
+
+/* Fade hero into next section for a seamless merge */
+.zeal-hero::after,
+.hero--luxury::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 170px;
+  background: linear-gradient(
+    to bottom,
+    rgba(11,11,26,0.0),
+    rgba(11,11,26,0.35),
+    rgba(249,249,255,0.0)
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Mobile adjustments */
+@media (max-width: 700px) {
+  .zeal-hero .hero-content,
+  .hero--luxury .hero-content {
+    left: 1.5rem;
+    bottom: 1.75rem;
+    max-width: 90%;
+    text-align: left; /* still left-aligned on mobile for premium feel */
+  }
+
+  .zeal-hero, .hero--luxury {
+    min-height: 85vh;
+  }
+}
+
+
+
+
+
+
+
+
+/* Instagram card */
+.s-card {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 14px;
+  overflow: hidden;
+}
+.s-card-media {
+  height: 160px;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 20px rgba(255,213,79,0.25);
+  border-bottom: 1px solid rgba(255,213,79,0.1);
+}
+.s-card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: .6rem;
+}
+.s-card-ctas {
+  display: flex;
+  gap: .5rem;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+.s-btn {
+  padding: .5rem .9rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  border: 0;
+  text-align: center;
+}
+.s-btn-primary { background: var(--gold); color: #0d052d; }
+.s-btn-ghost { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.06); }
+
+/* Instagram + Developer showcase: centered, responsive cards */
+.showcase-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  align-items: start;
+  justify-items: center;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+/* card base inherits .s-card styles; override sizing */
+.instagram-card, .developer-card {
+  width: 100%;
+  max-width: 920px;
+  display: grid;
+  grid-template-columns: 44% 1fr;
+  gap: 1rem;
+  align-items: stretch;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(2,6,23,0.06);
+}
+
+/* media column uses background-image already set inline */
+.instagram-card .s-card-media,
+.developer-card .s-card-media {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;
+}
+
+/* body column */
+.instagram-card .s-card-body,
+.developer-card .s-card-body {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* titles and text */
+.instagram-card h5,
+.developer-card h5 { margin: 0 0 .5rem; color: var(--gold); }
+.developer__intro { margin: 0 0 1rem; line-height: 1.6; color: rgba(13,5,45,0.95); }
+
+/* buttons row wrap and center on small screens */
+.s-card-ctas { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+
+/* small screens: stack media above body and single column layout */
+@media (max-width:900px) {
+  .showcase-row { grid-template-columns: 1fr; }
+  .instagram-card, .developer-card { grid-template-columns: 1fr; }
+  .instagram-card .s-card-media, .developer-card .s-card-media { min-height: 220px; aspect-ratio: 16/9; }
+  .instagram-card .s-card-body, .developer-card .s-card-body { padding: 1rem; text-align: center; }
+  .developer__intro { color: rgba(13,5,45,0.9); }
+}
+
+/* very small screens: tighten spacing */
+@media (max-width:420px) {
+  .hero-extended { min-height: 48vh; }
+  .hero-title { font-size: 1.4rem; }
+  .developer__intro { font-size: 0.95rem; }
+  .s-card-ctas { justify-content: center; }
+}
+.developer-card .s-card-media {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;            /* or whatever you need */
+  background-image: url('/assets/dev-photo.png');
+  background-size: cover;       /* fills area, preserves aspect */
+  background-position: center;  /* keeps focal point centered */
+  border-radius: 12px;          /* rounded corners */
+  overflow: hidden;             /* ensure corners are clipped */
+}
+.inst-photo-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 220px;
+  background-image: url('/assets/zeal2.png');
+  background-size: cover;       /* fills area, preserves aspect */
+  background-position: center;  /* keeps focal point centered */
+  border-radius: 12px;          /* rounded corners */
+  overflow: hidden;             /* ensure corners are clipped */
+}
+
+.inst-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#instagram .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.showcase-row {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+}
+/* Mobile-first: stack buttons */
+.instagram-card .s-card-ctas {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  width: 100%;
+  margin-top: auto;
+}
+
+.instagram-card .s-card-ctas .s-btn {
+  width: 100%;
+}
+
+/* Desktop: side-by-side */
+@media (min-width: 720px) {
+  .instagram-card .s-card-ctas {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .instagram-card .s-card-ctas .s-btn {
+    width: auto;
+  }
+}
+/* Position hero content at bottom center */
+.zeal-hero .hero-content,
+.hero--luxury .hero-content {
+  position: absolute;
+  bottom: 2.5rem;     /* adjust up/down */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  width: 100%;
+  max-width: 720px;
+  z-index: 3;
+  margin: 0;
+}
+
+
+
+
+
+
+
+/* Ensure consistent box model and safe horizontal padding */
+* { box-sizing: border-box; }
+
+/* Container safety: keeps content from touching device edges */
+#instagram .container,
+#instagram .showcase-row,
+.container { padding-inline: 1rem; }
+
+/* Keep the showcase row centered and constrained */
+.showcase-row {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  justify-items: center;
+  box-sizing: border-box;
+  padding-inline: 0.25rem; /* tiny inner padding to prevent edge slip */
+}
+
+/* Ensure each card never exceeds viewport width on small devices */
+.s-card {
+  width: 100%;
+  max-width: 920px;
+  box-sizing: border-box;
+}
+
+/* Make media framing identical for Instagram and Developer */
+.inst-photo-wrap,
+.dev-photo-wrap,
+.instagram-card .s-card-media,
+.developer-card .s-card-media {
+  width: 100%;
+  min-height: 220px;
+  overflow: hidden;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  display: block;
+}
+
+/* If using <img> inside wrappers, ensure same behavior */
+.inst-photo-wrap img,
+.dev-photo-wrap img,
+.developer-img,
+.inst-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Prevent horizontal overflow on very small screens */
+html, body { overflow-x: hidden; }
+/* Base button polish */
+.s-btn, .btn {
+  font-weight: 800;
+  letter-spacing: .02em;
+  border-radius: 12px;
+  padding: .75rem 1rem;
+  transition: transform .14s ease, box-shadow .14s ease, opacity .14s ease;
+  will-change: transform, box-shadow;
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Primary button: bold, warm, and luminous */
+.s-btn-primary {
+  background: linear-gradient(180deg, var(--gold), #e6b84a);
+  color: #0d052d;
+  box-shadow: 0 8px 24px rgba(246,200,95,0.18);
+}
+
+/* Ghost and secondary styles */
+.s-btn-ghost {
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.btn--secondary {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid rgba(246,200,95,0.12);
+}
+
+/* Hover / focus / active */
+.s-btn-primary:hover,
+.s-btn-ghost:hover,
+.btn--secondary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(2,6,23,0.12);
+  opacity: 1;
+}
+.s-btn:active { transform: translateY(-1px) scale(.998); }
+.s-btn:focus-visible, .btn:focus-visible {
+  outline: 3px solid rgba(246,200,95,0.18);
+  outline-offset: 4px;
+}
+
+/* Make CTAs larger and full-width on mobile, inline on desktop */
+.s-card-ctas { display:flex; gap:.6rem; flex-direction:column; width:100%; }
+.s-card-ctas .s-btn, .s-card-ctas .btn { width:100%; }
+
+/* Desktop: side-by-side CTAs */
+@media (min-width:720px) {
+  .s-card-ctas { flex-direction:row; justify-content:flex-start; }
+  .s-card-ctas .s-btn, .s-card-ctas .btn { width:auto; min-width: 140px; }
+}
+/* Match card heights visually when possible */
+.showcase-row { align-items: start; }
+.instagram-card, .developer-card { align-items: stretch; }
+
+/* Slightly stronger card frame to match hero glow */
+.instagram-card, .developer-card {
+  border-radius: 14px;
+  border: 1px solid rgba(246,200,95,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+}
+
+/* Make section title and cards optically centered */
+#instagram .section__title { text-align: center; margin-bottom: 1rem; }
+
+/* Reduce chance of content overflow from long text */
+.s-card-body { word-break: break-word; }
+
+.inst-photo-wrap {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 220px;
+}
+
+.inst-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#instagram .container,
+.showcase-row,
+.s-card {
+  width: 100%;
+  max-width: 1100px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: center/cover no-repeat url('/assets/zeal1.png');
+  background-image: url('/assets/hero-zeal.png');
+
+  filter: brightness(1.1) saturate(1.05);
+  opacity: 0.92;
+  z-index: 1;
+  pointer-events: none;
+
+}
+
+.inst-photo-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+
+.inst-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+
+/* Slider container */
+.highlights-slider {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-block: 1rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch; /* native momentum on iOS */
+  scroll-behavior: smooth;
+  user-select: none; /* prevent text selection while dragging */
+}
+.highlights-slider::-webkit-scrollbar { display: none; }
+
+/* Highlight card */
+.highlight-card {
+  min-width: 280px;
+  width: calc(100% - 2rem); /* ensures a comfortable peek on small screens */
+  max-width: 420px;
+  scroll-snap-align: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(246,200,95,0.15);
+  padding: 1.5rem;
+  border-radius: 14px;
+  flex-shrink: 0;
+  backdrop-filter: blur(4px);
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease;
+  box-sizing: border-box;
+}
+
+/* Gold glow hover */
+.highlight-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 22px rgba(246,200,95,0.35),
+              0 0 8px rgba(246,200,95,0.25);
+}
+
+/* Navigation dots */
+.highlight-dots {
+  display: flex;
+  justify-content: center;
+  gap: .5rem;
+  margin-top: 1.5rem;
+}
+
+/* make dot transitions smoother and ensure active state is obvious */
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(246,200,95,0.25);
+  transition: background .25s ease, transform .25s ease;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  will-change: transform, background;
+}
+.dot.active {
+  background: var(--gold);
+  transform: scale(1.35);
+}
+
+/* Accessibility focus */
+.dot:focus { outline: 3px solid rgba(246,200,95,0.18); outline-offset: 4px; }
+
+/* Responsive tweaks */
+@media (min-width: 900px) {
+  .highlight-card { width: 320px; }
+  .highlights-slider { gap: 2rem; padding-block: 1.5rem; }
+}
+
+
+
+
+/* Explore Button */
+.hero-cta {
+  margin: 1.4rem 0 1.6rem;
+}
+
+/* ZEAL-style hero button */
+.btn-explore {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 30px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(255,255,255,0.7);
+  background: transparent;
+
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease,
+    background-color 0.28s ease;
+
+  /* subtle, professional glow */
+  box-shadow:
+    0 0 10px rgba(255,255,255,0.18),
+    0 0 24px rgba(255,255,255,0.12);
+}
+
+/* Hover: slight lift + brighter aura, still flat */
+.btn-explore:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.95);
+  background-color: rgba(255,255,255,0.06);
+
+  box-shadow:
+    0 0 14px rgba(255,255,255,0.32),
+    0 0 32px rgba(255,255,255,0.22);
+}
+
+/* Optional: reduce motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .btn-explore {
+    transition: none;
+  }
+}
+
+
+/* Premium hero enhancements */
+.hero--premium { position: relative; overflow: hidden; min-height: 88vh; display:flex; align-items:center; justify-content:center; padding-top:6rem; padding-bottom:4rem; }
+
+.hero-bg--image {
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/zeal2.png');
+  background-size: cover;
+  background-position: center;
+  filter: saturate(1.05) contrast(1.02) brightness(0.9);
+  transform-origin: center;
+  will-change: transform;
+  transition: transform 420ms ease;
+  z-index: 1;
+}
+
+/* soft dark overlay to increase perceived contrast */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6,6,12,0.45), rgba(6,6,12,0.55));
+  mix-blend-mode: multiply;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* floating gold orb for luxury accent */
+.hero-orb {
+  position: absolute;
+  right: 8%;
+  top: 18%;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,213,79,0.22), rgba(255,213,79,0.08) 30%, rgba(255,213,79,0.02) 55%, transparent 70%);
+  filter: blur(28px) saturate(1.2);
+  transform: translate3d(0,0,0);
+  z-index: 3;
+  pointer-events: none;
+  will-change: transform, opacity;
+  opacity: 0.95;
+}
+
+/* content sits above layers */
+.hero-content { position: relative; z-index: 4; max-width: 920px; text-align: center; padding: 2rem; backdrop-filter: none; transition: transform 320ms ease, opacity 320ms ease; }
+
+/* typography */
+.hero-title { font-family: 'Anton', sans-serif; color: var(--gold); font-size: clamp(2.8rem, 6vw, 4.8rem); letter-spacing: .06em; text-shadow: 0 8px 36px rgba(0,0,0,0.45); margin: 0 0 0.6rem; }
+
+.hero-subtitle { color: rgba(255,255,255,0.92); max-width: 720px; margin: 0.6rem auto 0; line-height: 1.6; font-size: 1.05rem; }
+
+/* CTA styling kept prominent */
+.btn-explore { display:inline-flex; align-items:center; justify-content:center; padding: 12px 28px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); color: #fff; font-weight:700; letter-spacing: .12em; text-transform:uppercase; box-shadow: 0 8px 28px rgba(2,6,23,0.28); transition: transform .22s ease, box-shadow .22s ease; }
+
+/* hover */
+.btn-explore:hover { transform: translateY(-3px); box-shadow: 0 18px 48px rgba(2,6,23,0.36); border-color: rgba(255,213,79,0.9); }
+
+/* responsive adjustments */
+@media (max-width:900px) {
+  .hero-orb { width: 260px; height: 260px; right: 6%; top: 12%; opacity: 0.9; }
+  .hero-title { font-size: clamp(2rem, 8vw, 3.2rem); }
+  .hero--premium { min-height: 72vh; padding-bottom: 2.5rem; }
+}
+
+/* reduced motion: disable transforms and animations */
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb, .hero-bg--image, .hero-content { transition: none !important; transform: none !important; }
+}
+
+
+/* Responsive premium hero */
+.hero--responsive { position: relative; overflow: hidden; display:flex; align-items:center; justify-content:center; padding-top: env(safe-area-inset-top, 6rem); padding-bottom: 3.5rem; min-height: clamp(56vh, 72vh, 92vh); }
+
+/* Background container and responsive picture */
+.hero-bg--responsive { position: absolute; inset: 0; z-index: 1; display:block; overflow:hidden; pointer-events:none; }
+.hero-bg__img { width:100%; height:100%; object-fit:cover; object-position:center center; display:block; transform-origin:center; will-change:transform; transition: transform 0.6s ease; }
+
+/* Mobile focal adjustments */
+@media (max-width:900px) { .hero-bg__img { object-position: center 30%; } }
+@media (max-width:420px) { .hero-bg__img { object-position: center 25%; } }
+
+/* Overlay for contrast */
+.hero--responsive::after { content:""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(6,6,12,0.45), rgba(6,6,12,0.65)); z-index:2; pointer-events:none; }
+
+/* Floating orb (scales with viewport) */
+.hero-orb--responsive {
+  position:absolute; right:8%; top:18%;
+  width: clamp(120px, 28vw, 420px);
+  height: clamp(120px, 28vw, 420px);
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,213,79,0.18), rgba(255,213,79,0.06) 30%, rgba(255,255,255,0.02) 60%, transparent 70%);
+  filter: blur(18px); z-index:3; pointer-events:none; transform: translate3d(0,0,0); will-change: transform, opacity; opacity: 0.95;
+}
+
+/* Content container */
+.hero-content--responsive { position: relative; z-index: 4; max-width: min(920px, 92%); text-align: center; padding: clamp(1rem, 2.5vw, 2.5rem); margin: 0 auto; box-sizing: border-box; transition: transform .28s ease, opacity .28s ease; }
+
+/* Typography */
+.hero-title { font-family: 'Anton', sans-serif; color: var(--gold); font-size: clamp(2rem, 6vw, 4.8rem); line-height:1; margin:0 0 .6rem; text-shadow: 0 6px 28px rgba(0,0,0,0.45); }
+.hero-subtitle { color: rgba(255,255,255,0.92); font-size: clamp(0.95rem, 2.2vw, 1.1rem); margin-top:.6rem; }
+
+/* CTA */
+.btn-explore { display:inline-flex; align-items:center; justify-content:center; padding: 12px 28px; border-radius:999px; border:1px solid rgba(255,255,255,0.12); background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); color:#fff; font-weight:700; letter-spacing:.12em; text-transform:uppercase; box-shadow:0 8px 30px rgba(2,6,23,0.18); transition: transform .22s ease, box-shadow .22s ease; }
+
+/* Full-width CTA on small screens */
+@media (max-width:600px) {
+  .btn-explore { width:100%; padding: 14px 18px; font-size: 0.95rem; }
+  .hero-content--responsive { text-align: left; padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb--responsive, .hero-bg__img, .hero-content--responsive { transition: none !important; transform: none !important; animation: none !important; }
+}
+
+/* Prevent horizontal overflow */
+html, body { overflow-x: hidden; }
+/* Ensure hero image is always centered and covers the area */
+.hero--centered { position: relative; overflow: hidden; display:flex; align-items:center; justify-content:center; padding-top:6rem; padding-bottom:3.5rem; min-height:60vh; }
+
+.hero-bg--centered { position:absolute; inset:0; z-index:1; pointer-events:none; display:block; }
+.hero-bg__img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* center the image element itself */
+  width: auto;
+  height: 100%;
+  min-width: 100%;
+  object-fit: cover;
+  object-position: center center; /* keep focal point centered */
+  display:block;
+}
+
+/* Fallback for very narrow screens: ensure image fills width */
+@media (max-width:900px) {
+  .hero-bg__img { width: 100%; height: auto; min-height: 100%; object-position: center 30%; transform: translate(-50%, -50%); }
+}
+
+/* Decorative orb — transforms allowed here only */
+.hero-orb--centered {
+  position:absolute; right:6%; top:16%;
+  width: clamp(120px, 26vw, 420px);
+  height: clamp(120px, 26vw, 420px);
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,213,79,0.18), rgba(255,213,79,0.06) 30%, transparent 60%);
+  filter: blur(18px);
+  z-index:3; pointer-events:none; will-change:transform;
+}
+
+/* Content above everything */
+.hero-content--centered { position:relative; z-index:4; max-width:920px; text-align:center; padding:2rem; }
+
+/* Prevent JS from accidentally applying transforms to the image element:
+   If your JS sets transform on .hero-bg or .hero-bg__img, remove it or target only decorative layers. */
+
+/* --- Hero centering fixes --- */
+.hero--centered { position: relative; overflow: hidden; display:flex; align-items:center; justify-content:center; padding-top:6rem; padding-bottom:3.5rem; min-height:60vh; }
+
+.hero-bg--centered { position:absolute; inset:0; z-index:1; pointer-events:none; display:block; overflow:hidden; }
+.hero-bg__img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%); /* center the image element */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center; /* keep focal point centered */
+  display:block;
+}
+
+/* Narrow screens: ensure image fills width and keeps focal point */
+@media (max-width:900px) {
+  .hero-bg__img { object-position: center 30%; }
+}
+
+/* Decorative orb */
+.hero-orb--centered {
+  position:absolute; right:6%; top:16%;
+  width: clamp(120px, 26vw, 420px);
+  height: clamp(120px, 26vw, 420px);
+  border-radius:50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,213,79,0.18), rgba(255,213,79,0.06) 30%, transparent 60%);
+  filter: blur(18px);
+  z-index:3; pointer-events:none; will-change:transform;
+}
+
+/* Content above everything */
+.hero-content--centered { position:relative; z-index:4; max-width:920px; text-align:center; padding:2rem; margin:0 auto; }
+
+/* Ensure no horizontal overflow */
+html, body { overflow-x: hidden; }
+/* Testimonials: premium dark container for improved readability */
+#testimonials .container {
+  background: linear-gradient(180deg, rgba(12,12,14,0.96), rgba(18,18,20,0.98));
+  color: #f6f4f2; /* light text for high contrast */
+  padding: 2.25rem;
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(2,6,23,0.45);
+  border: 1px solid rgba(255,213,79,0.06); /* subtle gold rim */
+  margin: 0.75rem auto;
+}
+
+/* Make testimonial cards stand out */
+#testimonials .testimonial-slider {
+  position: relative;
+  z-index: 2;
+}
+
+/* Individual testimonial styling */
+#testimonials .testimonial {
+  color: #f6f4f2;
+  opacity: 0.9;
+  transition: opacity .28s ease, transform .28s ease;
+  padding: 1.25rem 0;
+}
+
+/* Active testimonial slightly brighter and lifted */
+#testimonials .testimonial.active {
+  opacity: 1;
+  transform: translateY(-4px);
+}
+
+/* Quote and author */
+#testimonials .testimonial p { 
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #f6f4f2;
+  margin: 0 0 0.75rem;
+}
+#testimonials .testimonial footer {
+  color: rgba(246,244,242,0.78);
+  font-size: 0.95rem;
+}
+
+/* CTA / links inside testimonials (if any) */
+#testimonials a, #testimonials .btn {
+  color: #ffd966; /* warm gold for links/buttons */
+  text-decoration: underline;
+}
+
+/* Responsive: reduce padding on small screens */
+@media (max-width: 700px) {
+  #testimonials .container {
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  #testimonials .testimonial p { font-size: 1rem; }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  #testimonials .testimonial,
+  #testimonials .testimonial.active {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* Testimonials container: dark, premium background for readability */
+#testimonials .testimonials-container {
+  background: linear-gradient(180deg, rgba(12,12,14,0.96), rgba(18,18,20,0.98));
+  color: #f6f4f2;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(2,6,23,0.45);
+  border: 1px solid rgba(255,213,79,0.06);
+  margin: 1rem auto;
+  position: relative;
+}
+
+/* Slider layout: stack testimonials on top of each other */
+.testimonial-slider {
+  position: relative;
+  min-height: 120px; /* ensures stable height; adjust as needed */
+  overflow: visible;
+}
+
+/* Each testimonial occupies the same space and is absolutely stacked */
+.testimonial {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 420ms cubic-bezier(.2,.9,.3,1), transform 420ms cubic-bezier(.2,.9,.3,1);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+}
+
+/* Active testimonial is visible and interactive */
+.testimonial.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* Quote styling */
+.testimonial blockquote {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1rem, 1.8vw, 1.05rem);
+  line-height: 1.6;
+  color: #f6f4f2;
+}
+
+/* Author styling */
+.testimonial footer {
+  color: rgba(246,244,242,0.78);
+  font-size: 0.95rem;
+}
+
+/* Responsive: reduce padding and min-height on small screens */
+@media (max-width: 700px) {
+  #testimonials .testimonials-container { padding: 1rem; border-radius: 8px; }
+  .testimonial-slider { min-height: 100px; }
+}
+
+/* Reduced motion: disable transitions */
+@media (prefers-reduced-motion: reduce) {
+  .testimonial, .testimonial.active { transition: none !important; transform: none !important; }
+}
+/* Testimonials: ensure only one visible at a time */
+.testimonials-container { position: relative; z-index: 1; }
+
+/* Slider wrapper */
+.testimonial-slider { position: relative; min-height: 120px; }
+
+/* Stack testimonials absolutely so they occupy same space */
+.testimonial {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 420ms cubic-bezier(.2,.9,.3,1), transform 420ms cubic-bezier(.2,.9,.3,1);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+  visibility: hidden; /* extra safety */
+}
+
+/* Active testimonial visible and interactive */
+.testimonial.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  visibility: visible;
+}
+
+/* If any global rule sets display:block on .testimonial, force it to be block inside slider */
+.testimonial-slider .testimonial { display: flex !important; }
+
+/* Quote and author */
+.testimonial blockquote { margin: 0 0 0.75rem; font-size: 1.05rem; line-height: 1.6; color: #f6f4f2; }
+.testimonial footer { color: rgba(246,244,242,0.78); font-size: 0.95rem; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .testimonial, .testimonial.active { transition: none !important; transform: none !important; }
+}
+/* Header */
+.zeal-header { position: sticky; top: 0; z-index: 60; backdrop-filter: blur(6px); background: linear-gradient(180deg, rgba(6,6,8,0.55), rgba(6,6,8,0.35)); border-bottom: 1px solid rgba(255,255,255,0.03); }
+.container.zeal-nav { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:1rem 1.25rem; max-width:1200px; margin:0 auto; }
+.nav-left { display:flex; gap:1rem; align-items:center; }
+.nav-link { color: rgba(255,255,255,0.9); text-decoration:none; font-weight:600; letter-spacing:0.02em; }
+.nav-logo { font-family:'Anton',sans-serif; color:var(--gold,#ffd966); font-size:1.25rem; text-decoration:none; }
+.nav-right { display:flex; gap:0.75rem; align-items:center; }
+
+/* Hamburger */
+.hamburger { width:44px; height:36px; display:inline-flex; align-items:center; justify-content:center; background:transparent; border:0; cursor:pointer; padding:6px; }
+.hamburger span { display:block; width:22px; height:2px; background:rgba(255,255,255,0.9); margin:3px 0; border-radius:2px; transition: transform .28s ease, opacity .2s ease; }
+.hamburger.is-open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.hamburger.is-open span:nth-child(2) { opacity:0; }
+.hamburger.is-open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* Trust link */
+.trust-link { background: rgba(255,255,255,0.04); color:#fff; padding:8px 12px; border-radius:8px; text-decoration:none; font-weight:700; }
+
+/* Hero */
+.hero-premium { position:relative; overflow:hidden; min-height: clamp(56vh, 72vh, 92vh); display:flex; align-items:center; justify-content:center; padding-top: env(safe-area-inset-top, 4rem); padding-bottom:3.5rem; }
+.hero-media { position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden; }
+.hero-media__img { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:100%; height:100%; object-fit:cover; object-position:center 35%; will-change:transform; }
+.hero-overlay { position:absolute; inset:0; background: linear-gradient(180deg, rgba(6,6,8,0.45), rgba(6,6,8,0.65)); z-index:2; pointer-events:none; }
+
+/* Orb */
+.hero-orb { position:absolute; right:6%; top:14%; width:clamp(120px, 26vw, 420px); height:clamp(120px, 26vw, 420px); border-radius:50%; background: radial-gradient(circle at 30% 30%, rgba(255,213,79,0.14), rgba(255,213,79,0.04) 30%, transparent 60%); filter: blur(18px); z-index:3; pointer-events:none; }
+
+/* Content */
+.hero-body { position:relative; z-index:4; width:100%; display:flex; align-items:center; justify-content:center; padding:1rem; }
+.hero-inner { max-width:980px; text-align:center; color:#fff; padding: clamp(1rem, 3vw, 2.5rem); box-sizing:border-box; }
+.hero-heading { font-family: 'Inter', system-ui, sans-serif; font-weight:800; font-size: clamp(2rem, 6vw, 4.8rem); margin:0 0 0.6rem; color:var(--gold,#ffd966); text-shadow: 0 10px 40px rgba(0,0,0,0.45); letter-spacing: -0.02em; }
+.hero-lead { color: rgba(255,255,255,0.92); font-size: clamp(1rem, 2.2vw, 1.15rem); margin:0 0 1.25rem; line-height:1.6; }
+
+/* Actions */
+.hero-actions { display:flex; gap:0.75rem; justify-content:center; margin-bottom:1rem; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; justify-content:center; padding:12px 22px; border-radius:999px; text-decoration:none; font-weight:700; }
+.btn-primary { background: linear-gradient(180deg, #ffd966, #f0c84a); color:#08101a; box-shadow:0 12px 36px rgba(2,6,23,0.18); border:1px solid rgba(0,0,0,0.06); }
+.btn-ghost { background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.08); }
+
+/* Trust list */
+.hero-trust { display:flex; gap:1.25rem; justify-content:center; margin-top:0.5rem; list-style:none; padding:0; margin:0 auto; color:rgba(255,255,255,0.85); font-size:0.95rem; }
+.hero-trust li { display:inline-flex; align-items:center; gap:0.5rem; }
+
+/* Responsive adjustments */
+@media (max-width:900px) {
+  .hero-media__img { object-position:center 30%; }
+  .hero-orb { right:4%; top:8%; width:clamp(90px, 30vw, 260px); height:clamp(90px, 30vw, 260px); }
+  .hero-inner { text-align:left; padding-left:1rem; padding-right:1rem; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-orb { transition:none !important; transform:none !important; animation:none !important; }
+  .hamburger span { transition:none !important; }
+}
+
+/* Hero patch: ensure image is visible, centered, and content sits above overlay */
+.zeal-hero { position: relative; overflow: hidden; min-height: 60vh; display:flex; align-items:center; justify-content:center; padding-top:4rem; padding-bottom:3.5rem; }
+.hero-media { position:absolute; inset:0; z-index:1; pointer-events:none; display:block; background-size:cover; background-position:center center; }
+.hero-media__img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+  visibility: visible;
+  opacity: 1;
+}
+
+/* overlay sits above image but below content */
+.hero-overlay { position:absolute; inset:0; z-index:2; background: linear-gradient(180deg, rgba(6,6,8,0.45), rgba(6,6,8,0.65)); pointer-events:none; }
+
+/* content above overlay */
+.hero-body { position: relative; z-index: 4; width:100%; display:flex; align-items:center; justify-content:center; padding:1rem; }
+.hero-inner { max-width:980px; text-align:center; color:#fff; padding: clamp(1rem, 3vw, 2.5rem); box-sizing:border-box; }
+.hero-heading { font-weight:800; font-size: clamp(2rem, 6vw, 4.8rem); margin:0 0 0.6rem; color: #ffd966; letter-spacing: -0.02em; text-shadow: 0 10px 40px rgba(0,0,0,0.45); }
+.hero-lead { color: rgba(255,255,255,0.92); font-size: clamp(1rem, 2.2vw, 1.15rem); margin:0 0 1.25rem; line-height:1.6; }
+
+.hero-actions { display:flex; gap:0.75rem; justify-content:center; margin-bottom:1rem; flex-wrap:wrap; }
+.btn { display:inline-flex; align-items:center; justify-content:center; padding:12px 22px; border-radius:999px; text-decoration:none; font-weight:700; }
+.btn-primary { background: linear-gradient(180deg, #ffd966, #f0c84a); color:#08101a; box-shadow:0 12px 36px rgba(2,6,23,0.18); border:1px solid rgba(0,0,0,0.06); }
+.btn-ghost { background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.08); }
+
+.hero-trust { display:flex; gap:1.25rem; justify-content:center; margin-top:0.5rem; list-style:none; padding:0; margin:0 auto; color:rgba(255,255,255,0.85); font-size:0.95rem; }
+.hero-trust li { display:inline-flex; align-items:center; gap:0.5rem; }
+
+/* Safety: force image visible if global rules hide images */
+.hero-media img { display:block !important; opacity:1 !important; visibility:visible !important; }
+
+/* Responsive adjustments */
+@media (max-width:900px) {
+  .hero-media__img { object-position:center 30%; }
+  .hero-inner { text-align:left; padding-left:1rem; padding-right:1rem; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero-media__img { transition: none !important; }
+}
+/* Force hero image visibility and correct stacking */
+.zeal-hero { position: relative; overflow: hidden; }
+.hero-media { position: absolute; inset: 0; z-index: 1 !important; pointer-events: none !important; background-size: cover; background-position: center center; }
+.hero-media__img {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 35% !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 1 !important;
+}
+.hero-overlay { position: absolute; inset: 0; z-index: 2 !important; background: linear-gradient(180deg, rgba(6,6,8,0.45), rgba(6,6,8,0.65)) !important; pointer-events: none !important; }
+.hero-body { position: relative; z-index: 4 !important; }
+.hero-media img { display: block !important; opacity: 1 !important; visibility: visible !important; }
+/* Hero image: ensure picture and img fill the hero and are visible */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  background-size: cover;
+  background-position: center center;
+}
+
+.hero-media picture,
+.hero-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+.hero-media img {
+  object-fit: cover;
+  object-position: center 35%;
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Overlay above image but below content */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(6,6,8,0.45), rgba(6,6,8,0.65));
+}
+
+/* Content container must be above overlay */
+.hero-body { position: relative; z-index: 4; }
+
+
+
+
+
+
+
+
+/* Hero media: ensure picture and img fill the hero */
+.hero-media { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
+.hero-media picture,
+.hero-media picture img,
+.hero-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hero-media img {
+  object-fit: cover;
+  object-position: center 35%;
+  visibility: visible;
+  opacity: 1;
+  pointer-events: none;
+}
+.hero-media picture {
+  display: block !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  z-index: 1 !important;
+}
+/* Ensure media fills the hero and image is visible */
+.hero-media {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  display: block;
+  background-size: cover;
+  background-position: center center;
+}
+
+/* Make picture and img fill the container */
+.hero-media picture,
+.hero-media picture img,
+.hero-media img.hero-media__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  object-fit: cover;
+  object-position: center 35%;
+  visibility: visible;
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Overlay sits above image but below content */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, rgba(6,6,8,0.45), rgba(6,6,8,0.65));
+  pointer-events: none;
+  mix-blend-mode: normal; /* safer default; remove if you intentionally want multiply */
+}
+
+/* Content must be above overlay */
+.hero-body { position: relative; z-index: 4; }
+/* Hide broken images in the hero immediately (quick test / temporary) */
+.hero-media img {
+  /* ensure normal images still show */
+  display: block;
+}
+
+/* If the image failed to load, browsers often set naturalWidth to 0.
+   Use an attribute selector fallback for the broken icon (some browsers add a 'src' but show nothing).
+   This rule is a safe temporary override to hide the broken image visually. */
+.hero-media img[onerror], /* keeps compatibility if onError attribute exists */
+.hero-media img[src$="zeal2.png"][width="0"],
+.hero-media img[src$="zeal2.png"][height="0"] {
+  display: none !important;
+}
+
+/* Safer universal fallback: hide any image inside .hero-media that has zero layout */
+.hero-media img:empty,
+.hero-media img[aria-hidden="true"] {
+  display: none !important;
+}
+/* 1) Specific class for the Book a Free consultation CTA */
+.book-consult {
+  color: #ffffff !important;
+  text-decoration: none;
+}
+
+/* 2) Fallback rules for common CTA classes if you can't add a class immediately */
+.trust-link,
+.btn-ghost,
+a[href="#contact"] {
+  color: #ffffff !important;
+}
+
+/* 3) Ensure icon or child elements inherit the color */
+.book-consult, .book-consult * ,
+.trust-link, .trust-link * ,
+.btn-ghost, .btn-ghost * {
+  color: inherit !important;
+}
+
+/* Specific CTA class (add class to the element if possible) */
+.book-consult,
+.trust-link.book-consult,
+a[href="#contact"].book-consult {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+
+
+.meet-dev-copy {
+  color: #ffffff;
+  position: relative; /* allows z-index to work */
+  z-index: 10;        /* above overlays with lower z-index */
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ensure children inherit color */
+.meet-dev-copy, .meet-dev-copy * {
+  color: inherit !important;
+}
+/* apply to the specific ancestor only if safe */
+.some-ancestor-class {
+  overflow: visible !important;
+}
+.hero-overlay {
+  mix-blend-mode: normal; /* or remove this line */
+  background: linear-gradient(180deg, rgba(6,6,8,0.35), rgba(6,6,8,0.45));
+  z-index: 2;
+}
+* Meet the developer paragraph: make text white and bring forward */
+.meet-dev-copy {
+  color: #ffffff;
+  position: relative;
+  z-index: 10;
+  visibility: visible;
+  opacity: 1;
+}
+.meet-dev-copy, .meet-dev-copy * {
+  color: inherit !important;
+}
+/* 1) Paragraph class — add className="meet-dev-copy" to the paragraph in markup */
+.meet-dev-copy {
+  color: #ffffff;
+  position: relative; /* allow z-index to work */
+  z-index: 20;        /* above overlay */
+  visibility: visible;
+  opacity: 1;
+}
+
+/* ensure children inherit color */
+.meet-dev-copy, .meet-dev-copy * {
+  color: inherit !important;
+}
+
+/* 2) Make overlay less intrusive (adjust to taste) */
+.hero-overlay {
+  z-index: 10; /* keep overlay above image but below .meet-dev-copy (20) */
+  mix-blend-mode: normal; /* avoid multiply which can hide text */
+  background: linear-gradient(180deg, rgba(6,6,8,0.35), rgba(6,6,8,0.45));
+}
+
+/* 3) If an ancestor clips the paragraph, allow it to be visible (apply only to the specific ancestor) */
+/* Replace .some-ancestor with the actual class/id of the ancestor that has overflow:hidden */
+.some-ancestor {
+  overflow: visible !important;
+}
+
+/* 4) If an ancestor creates a stacking context via transform/opacity, remove it if safe:
+   e.g., .some-ancestor { transform: none; } — only change if it doesn't break layout */
+
+/* Meet the developer container: modernized container with orbiting glow */
+.meet-developer { padding: 4rem 1.5rem; display:flex; justify-content:center; align-items:center; background:transparent; }
+
+.meet-dev-wrapper { position: relative; display: inline-block; }
+
+.meet-dev-container {
+  position: relative;
+  z-index: 5;
+  max-width: 72ch;
+  padding: 2.25rem 2.5rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  box-shadow: 0 6px 30px rgba(2,2,10,0.45);
+  color: #ffffff;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+/* paragraph and CTA */
+.meet-dev-copy { margin: 0 0 1.25rem; line-height: 1.6; color: #ffffff; font-size: 1.05rem; }
+.book-consult.cta {
+  display: inline-block;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform .18s ease, background .18s ease;
+}
+.book-consult.cta:hover { transform: translateY(-3px); background: rgba(255,255,255,0.10); }
+
+/* glow ring that orbits the container */
+.glow-ring { position: absolute; inset: -28px; z-index: 2; pointer-events: none; }
+
+/* the animated orb that travels the circular path */
+.glow-ring::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 50%;
+  top: 0%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.95), rgba(58, 12, 120, 0.85));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  animation: orbit 8s linear infinite;
+}
+
+/* subtle trailing glow along the orbit path */
+.glow-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(138,43,226,0.06), inset 0 0 40px rgba(58,12,120,0.04);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* orbit animation: rotate the pseudo-element around the center */
+@keyframes orbit {
+  0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(calc(50% + 28px)) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(calc(50% + 28px)) rotate(-360deg); }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .glow-ring::before { animation: none; opacity: 0.9; }
+  .book-consult.cta { transition: none; }
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .meet-dev-container { padding: 1.5rem; border-radius: 12px; }
+  .glow-ring { inset: -20px; }
+  .glow-ring::before { width: 14px; height: 14px; }
+}
+
+/* Utility class for explicit paragraph control if needed */
+.meet-dev-copy { color: #ffffff !important; position: relative; z-index: 6; }
+
+/* Meet the developer container: modernized container with orbiting glow */
+.meet-developer { padding: 4rem 1.5rem; display:flex; justify-content:center; align-items:center; background:transparent; }
+
+.meet-dev-wrapper { position: relative; display: inline-block; }
+
+.meet-dev-container {
+  position: relative;
+  z-index: 5;
+  max-width: 72ch;
+  padding: 2.25rem 2.5rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  box-shadow: 0 6px 30px rgba(2,2,10,0.45);
+  color: #ffffff;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+/* paragraph and CTA */
+.meet-dev-copy { margin: 0 0 1.25rem; line-height: 1.6; color: #ffffff; font-size: 1.05rem; }
+.book-consult.cta {
+  display: inline-block;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform .18s ease, background .18s ease;
+}
+.book-consult.cta:hover { transform: translateY(-3px); background: rgba(255,255,255,0.10); }
+
+/* glow ring that orbits the container */
+.glow-ring { position: absolute; inset: -28px; z-index: 2; pointer-events: none; }
+
+/* the animated orb that travels the circular path */
+.glow-ring::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 50%;
+  top: 0%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.95), rgba(58, 12, 120, 0.85));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  animation: orbit 8s linear infinite;
+}
+
+/* subtle trailing glow along the orbit path */
+.glow-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(138,43,226,0.06), inset 0 0 40px rgba(58,12,120,0.04);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* orbit animation: rotate the pseudo-element around the center */
+@keyframes orbit {
+  0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(calc(50% + 28px)) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(calc(50% + 28px)) rotate(-360deg); }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .glow-ring::before { animation: none; opacity: 0.9; }
+  .book-consult.cta { transition: none; }
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .meet-dev-container { padding: 1.5rem; border-radius: 12px; }
+  .glow-ring { inset: -20px; }
+  .glow-ring::before { width: 14px; height: 14px; }
+}
+
+/* Utility class for explicit paragraph control if needed */
+.meet-dev-copy { color: #ffffff !important; position: relative; z-index: 6; }
+
+/* Meet the developer container: modernized container with orbiting glow */
+.meet-developer { padding: 4rem 1.5rem; display:flex; justify-content:center; align-items:center; background:transparent; }
+
+.meet-dev-wrapper { position: relative; display: inline-block; }
+
+.meet-dev-container {
+  position: relative;
+  z-index: 5;
+  max-width: 72ch;
+  padding: 2.25rem 2.5rem;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  box-shadow: 0 6px 30px rgba(2,2,10,0.45);
+  color: #ffffff;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+/* paragraph and CTA */
+.meet-dev-copy { margin: 0 0 1.25rem; line-height: 1.6; color: #ffffff; font-size: 1.05rem; }
+.book-consult.cta {
+  display: inline-block;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  transition: transform .18s ease, background .18s ease;
+}
+.book-consult.cta:hover { transform: translateY(-3px); background: rgba(255,255,255,0.10); }
+
+/* glow ring that orbits the container */
+.glow-ring { position: absolute; inset: -28px; z-index: 2; pointer-events: none; }
+
+/* the animated orb that travels the circular path */
+.glow-ring::before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 50%;
+  top: 0%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.95), rgba(58, 12, 120, 0.85));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  animation: orbit 8s linear infinite;
+}
+
+/* subtle trailing glow along the orbit path */
+.glow-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 60px rgba(138,43,226,0.06), inset 0 0 40px rgba(58,12,120,0.04);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* orbit animation: rotate the pseudo-element around the center */
+@keyframes orbit {
+  0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(calc(50% + 28px)) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(calc(50% + 28px)) rotate(-360deg); }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .glow-ring::before { animation: none; opacity: 0.9; }
+  .book-consult.cta { transition: none; }
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .meet-dev-container { padding: 1.5rem; border-radius: 12px; }
+  .glow-ring { inset: -20px; }
+  .glow-ring::before { width: 14px; height: 14px; }
+}
+
+/* Utility class for explicit paragraph control if needed */
+.meet-dev-copy { color: #ffffff !important; position: relative; z-index: 6; }
+
+/* Strong override for Meet the developer section */
+.meet-developer,
+.meet-developer .meet-dev-wrapper,
+.meet-developer .meet-dev-container,
+.meet-developer .meet-dev-copy,
+.meet-developer .meet-dev-container * {
+  color: #ffffff !important;
+}
+
+.meet-developer .meet-dev-container {
+  position: relative !important;
+  z-index: 99999 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.18)) !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.55) !important;
+}
+
+.meet-developer .glow-ring {
+  position: absolute !important;
+  z-index: 99998 !important;
+  pointer-events: none !important;
+}
+
+.meet-developer ~ .hero-overlay,
+.meet-developer ~ .site-overlay,
+.meet-developer .hero-overlay,
+.meet-developer .site-overlay {
+  z-index: 1 !important;
+  mix-blend-mode: normal !important;
+  pointer-events: none !important;
+  background: transparent !important;
+}
+
+.meet-developer,
+.meet-developer * {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-ring::before { animation: none !important; }
+}
+
+/* Strong override for Meet the developer section */
+.meet-developer,
+.meet-developer .meet-dev-wrapper,
+.meet-developer .meet-dev-container,
+.meet-developer .meet-dev-copy,
+.meet-developer .meet-dev-container * {
+  color: #ffffff !important;
+}
+
+.meet-developer .meet-dev-container {
+  position: relative !important;
+  z-index: 99999 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.18)) !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.55) !important;
+}
+
+.meet-developer .glow-ring {
+  position: absolute !important;
+  z-index: 99998 !important;
+  pointer-events: none !important;
+}
+
+.meet-developer ~ .hero-overlay,
+.meet-developer ~ .site-overlay,
+.meet-developer .hero-overlay,
+.meet-developer .site-overlay {
+  z-index: 1 !important;
+  mix-blend-mode: normal !important;
+  pointer-events: none !important;
+  background: transparent !important;
+}
+
+.meet-developer,
+.meet-developer * {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glow-ring::before { animation: none !important; }
+}
+/* Strong override for Meet the developer section */
+.meet-developer,
+.meet-developer .meet-dev-wrapper,
+.meet-developer .meet-dev-container,
+.meet-developer .meet-dev-copy,
+.meet-developer .meet-dev-container * {
+  color: #ffffff !important;
+}
+
+/* Ensure the content container sits above overlays and other stacking contexts */
+.meet-developer .meet-dev-container {
+  position: relative !important;
+  z-index: 99999 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  /* optional: subtle backdrop so text reads clearly */
+  background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.18)) !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.55) !important;
+}
+
+/* Keep the glow ring visually behind the content but above the page background */
+.meet-developer .glow-ring {
+  position: absolute !important;
+  z-index: 99998 !important;
+  pointer-events: none !important;
+}
+
+/* If there is a site-wide overlay element that covers sections, lower it when it overlaps this section.
+   This targets common overlay class names; add any project-specific overlay classes if needed. */
+.meet-developer ~ .hero-overlay,
+.meet-developer ~ .site-overlay,
+.meet-developer .hero-overlay,
+.meet-developer .site-overlay {
+  z-index: 1 !important;
+  mix-blend-mode: normal !important;
+  pointer-events: none !important;
+  background: transparent !important;
+}
+
+/* Defensive: if an ancestor creates a stacking context via transform/opacity, allow the container to escape visually */
+.meet-developer,
+.meet-developer * {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* Respect reduced motion preference while keeping the override */
+@media (prefers-reduced-motion: reduce) {
+  .glow-ring::before { animation: none !important; }
+}
+
+/* Force Meet Developer section visible above overlays */
+.meet-developer, .meet-developer * {
+  color: #ffffff !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+.meet-developer .meet-dev-container {
+  position: relative !important;
+  z-index: 99999 !important;
+  background: rgba(0,0,0,0.28) !important;
+}
+.hero-overlay, .site-overlay {
+  z-index: 1 !important;
+  mix-blend-mode: normal !important;
+  pointer-events: none !important;
+  background: transparent !important;
+}
+
+/* Strong override for Meet the developer section */
+.meet-developer,
+.s-card.developer-card,
+.s-card.developer-card .s-card-body,
+.s-card.developer-card .developer__intro,
+.s-card.developer-card .developer__intro *,
+.s-card.developer-card .book-consult,
+.s-card.developer-card .book-consult * {
+  color: #ffffff !important;
+}
+
+/* Ensure the card sits above overlays */
+.s-card.developer-card {
+  position: relative !important;
+  z-index: 99999 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.18)) !important;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.55) !important;
+}
+
+/* Defensive: lower common site overlays when overlapping this card */
+.s-card.developer-card ~ .hero-overlay,
+.s-card.developer-card ~ .site-overlay,
+.s-card.developer-card .hero-overlay,
+.s-card.developer-card .site-overlay {
+  z-index: 1 !important;
+  mix-blend-mode: normal !important;
+  pointer-events: none !important;
+  background: transparent !important;
+}
+
+/* Remove transform/stacking traps inside this area */
+.s-card.developer-card,
+.s-card.developer-card * {
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* Text micro animation */
+.meet-dev-copy {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+  color: #ffffff !important;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+.meet-dev-animate {
+  animation: meetDevIn 700ms cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes meetDevIn {
+  0% { opacity: 0; transform: translateY(8px) scale(0.998); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* CTA styling */
+.book-consult {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 4;
+}
+
+/* Orbit wrapper and path */
+.orbit-wrapper {
+  position: absolute;
+  inset: -36px; /* space for orbit path */
+  pointer-events: none;
+  z-index: 2;
+  display: block;
+  transform: translateZ(0);
+  --orbit-rot: 0deg; /* updated by JS */
+}
+
+/* subtle circular path visual */
+.orbit-path {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(138,43,226,0.06), inset 0 0 24px rgba(58,12,120,0.03);
+  transform: translateZ(0);
+}
+
+/* the glowing orb that travels the path */
+.orbit-orb {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 50%;
+  top: 0%;
+  transform-origin: center calc(50% + 36px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.98), rgba(58,12,120,0.88));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  /* position along circular path using CSS rotation variable */
+  transform: rotate(var(--orbit-rot)) translateY(calc(-50% - 36px)) rotate(calc(-1 * var(--orbit-rot)));
+  transition: transform 120ms linear;
+}
+
+/* slow orbit on hover */
+  transition-duration: 400ms;
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .orbit-orb { transition: none !important; transform: translateY(calc(-50% - 36px)) !important; }
+  .meet-dev-animate { animation: none !important; }
+}
+
+/* Defensive overrides for overlays and stacking contexts */
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* wrapper that contains text and orbit */
+.meet-dev-text-wrap {
+  position: relative;
+  display: inline-block;
+  z-index: 3;
+  margin: 0 auto;
+}
+
+/* the text block itself */
+.meet-dev-text {
+  position: relative;
+  z-index: 6;
+  max-width: 72ch;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.12));
+  color: #ffffff !important;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+/* micro entrance animation for the text */
+.meet-dev-animate {
+  animation: meetDevIn 700ms cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes meetDevIn {
+  0% { opacity: 0; transform: translateY(8px) scale(.998); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* orbit container positioned around the text block */
+  position: absolute;
+  inset: -34px; /* controls orbit radius space */
+  pointer-events: none;
+  z-index: 2;
+  --orbit-rot: 0deg; /* updated by JS */
+}
+
+/* subtle circular path visual */
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 48px rgba(138,43,226,0.06), inset 0 0 28px rgba(58,12,120,0.03);
+  transform: translateZ(0);
+}
+
+/* the glowing orb that travels the path */
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 50%;
+  top: 0%;
+  transform-origin: center calc(50% + 34px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.98), rgba(58,12,120,0.88));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  transform: rotate(var(--orbit-rot)) translateY(calc(-50% - 34px)) rotate(calc(-1 * var(--orbit-rot)));
+  transition: transform 120ms linear;
+}
+
+/* slow orbit on hover of the text block */
+  transition-duration: 400ms;
+}
+
+/* ensure text and orb are visible above overlays */
+  color: #ffffff !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .meet-dev-animate { animation: none !important; }
+}
+
+/* responsive adjustments */
+@media (max-width: 640px) {
+  .meet-dev-text { padding: 1rem; border-radius: 10px; }
+}
+
+/* Orbital glow and strong overrides for Meet the developer card */
+  color: #ffffff !important;
+}
+
+/* Card visual and stacking */
+  position: relative !important;
+  z-index: 99999 !important;
+  overflow: visible !important;
+  background: linear-gradient(180deg, rgba(0,0,0,0.28), rgba(0,0,0,0.18)) !important;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.55) !important;
+  border-radius: 14px !important;
+}
+
+/* Inner layout */
+.s-card.developer-card .s-card-body { position: relative; z-index: 3; padding: 2rem; }
+
+/* Text micro animation */
+.meet-dev-copy {
+  margin: 0 0 1rem;
+  line-height: 1.6;
+  color: #ffffff !important;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+.meet-dev-animate {
+  animation: meetDevIn 700ms cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes meetDevIn {
+  0% { opacity: 0; transform: translateY(8px) scale(0.998); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* CTA styling */
+.book-consult {
+  display: inline-block;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.06);
+  color: #fff !important;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 4;
+}
+
+/* Orbit wrapper and path */
+.orbit-wrapper {
+  position: absolute;
+  inset: -36px; /* space for orbit path */
+  pointer-events: none;
+  z-index: 2;
+  display: block;
+  transform: translateZ(0);
+  --orbit-rot: 0deg; /* updated by JS */
+}
+
+/* subtle circular path visual */
+.orbit-path {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(138,43,226,0.06), inset 0 0 24px rgba(58,12,120,0.03);
+  transform: translateZ(0);
+}
+
+/* the glowing orb that travels the path */
+.orbit-orb {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 50%;
+  top: 0%;
+  transform-origin: center calc(50% + 36px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.98), rgba(58,12,120,0.88));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  /* position along circular path using CSS rotation variable */
+  transform: rotate(var(--orbit-rot)) translateY(calc(-50% - 36px)) rotate(calc(-1 * var(--orbit-rot)));
+  transition: transform 120ms linear;
+}
+
+/* slow orbit on hover */
+  transition-duration: 400ms;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .orbit-orb { transition: none !important; transform: translateY(calc(-50% - 36px)) !important; }
+  .meet-dev-animate { animation: none !important; }
+}
+
+/* Defensive overrides for overlays and stacking contexts */
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .orbit-wrapper { inset: -22px; }
+  .orbit-orb { width: 12px; height: 12px; }
+  .s-card.developer-card .s-card-body { padding: 1.25rem; }
+}
+
+/* Orbital glow specifically around the Meet the developer text */
+
+/* wrapper that contains text and orbit */
+.meet-dev-text-wrap {
+  position: relative;
+  display: inline-block;
+  z-index: 3;
+  margin: 0 auto;
+}
+
+/* the text block itself */
+.meet-dev-text {
+  position: relative;
+  z-index: 6;
+  max-width: 72ch;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.12));
+  color: #ffffff !important;
+  text-align: center;
+  backdrop-filter: blur(6px);
+}
+
+/* micro entrance animation for the text */
+.meet-dev-animate {
+  animation: meetDevIn 700ms cubic-bezier(.2,.9,.2,1) both;
+}
+@keyframes meetDevIn {
+  0% { opacity: 0; transform: translateY(8px) scale(.998); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* orbit container positioned around the text block */
+  position: absolute;
+  inset: -34px; /* controls orbit radius space */
+  pointer-events: none;
+  z-index: 2;
+  --orbit-rot: 0deg; /* updated by JS */
+}
+
+/* subtle circular path visual */
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: 0 0 48px rgba(138,43,226,0.06), inset 0 0 28px rgba(58,12,120,0.03);
+  transform: translateZ(0);
+}
+
+/* the glowing orb that travels the path */
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  left: 50%;
+  top: 0%;
+  transform-origin: center calc(50% + 34px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.98), rgba(58,12,120,0.88));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  transform: rotate(var(--orbit-rot)) translateY(calc(-50% - 34px)) rotate(calc(-1 * var(--orbit-rot)));
+  transition: transform 120ms linear;
+}
+
+/* slow orbit on hover of the text block */
+  transition-duration: 400ms;
+}
+
+/* ensure text and orb are visible above overlays */
+  color: #ffffff !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+
+/* reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .meet-dev-animate { animation: none !important; }
+}
+
+/* responsive adjustments */
+@media (max-width: 640px) {
+  .meet-dev-text { padding: 1rem; border-radius: 10px; }
+}
+.dev-photo { background-size: cover !important; background-position: center !important; min-height: 220px !important; background-repeat: no-repeat !important; }
+.dev-photo { background-size: cover !important; background-position: center !important; min-height: 220px !important; background-repeat: no-repeat !important; }
+.dev-photo { background-image: url('/images/dev-photo.png') !important; background-size: cover !important; background-position: center !important; min-height: 220px !important; }
+
+/* ===== Developer card: ensure photo visible and orbital glow around text ===== */
+.dev-photo {
+  background-image: url('/assets/dev-photo.svg') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  min-height: 220px !important;
+  width: 100%;
+  border-radius: 12px 12px 0 0;
+  display: block;
+}
+
+/* Orbital glow around the text block */
+.meet-dev-text-wrap { position: relative; display: inline-block; z-index: 3; margin: 0 auto; }
+.meet-dev-text {
+  position: relative; z-index: 6; max-width: 72ch; padding: 1.25rem 1.5rem; border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.12)); color: #ffffff !important;
+  text-align: center; backdrop-filter: blur(6px);
+}
+.meet-dev-animate { animation: meetDevIn 700ms cubic-bezier(.2,.9,.2,1) both; }
+@keyframes meetDevIn {
+  0% { opacity: 0; transform: translateY(8px) scale(.998); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* orbit container positioned around the text block */
+  position: absolute; width: 16px; height: 16px; left: 50%; top: 0%;
+  transform-origin: center calc(50% + 34px); border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.98), rgba(58,12,120,0.88));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  transform: rotate(var(--orbit-rot)) translateY(calc(-50% - 34px)) rotate(calc(-1 * var(--orbit-rot)));
+  transition: transform 120ms linear;
+}
+
+/* hover slow */
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .meet-dev-animate { animation: none !important; }
+}
+
+/* defensive: ensure card sits above overlays */
+
+/* Developer photo: use public/assets/dev-photo.png and ensure visible */
+.dev-photo {
+  background-image: url('/assets/dev-photo.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  min-height: 220px !important;
+  width: 100% !important;
+  display: block !important;
+  border-radius: 12px 12px 0 0 !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Ensure card sits above common overlays */
+  position: relative !important;
+  z-index: 99999 !important;
+  overflow: visible !important;
+}
+
+/* Text block and micro animation */
+.meet-dev-text-wrap { position: relative; display: inline-block; z-index: 6; margin: 0 auto; }
+.meet-dev-text {
+  position: relative; z-index: 7; max-width: 72ch; padding: 1.25rem 1.5rem; border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.12)); color: #ffffff !important;
+  text-align: center; backdrop-filter: blur(6px);
+}
+.meet-dev-animate { animation: meetDevIn 700ms cubic-bezier(.2,.9,.2,1) both; }
+@keyframes meetDevIn {
+  0% { opacity: 0; transform: translateY(8px) scale(.998); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Orbit path and orb around the text */
+  position: absolute; width: 16px; height: 16px; left: 50%; top: 0%;
+  transform-origin: center calc(50% + 34px); border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.98), rgba(58,12,120,0.88));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  transform: rotate(var(--orbit-rot)) translateY(calc(-50% - 34px)) rotate(calc(-1 * var(--orbit-rot)));
+  transition: transform 120ms linear;
+}
+
+/* Hover slow and reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .meet-dev-animate { animation: none !important; }
+}
+
+/* Defensive overlay adjustments (add project-specific overlay classes if needed) */
+.hero-overlay, .site-overlay { z-index: 1 !important; pointer-events: none !important; background: transparent !important; }
+
+/* Developer photo: use public/assets/dev-photo.png and ensure visible */
+.dev-photo {
+  background-image: url('/assets/dev-photo.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  min-height: 220px !important;
+  width: 100% !important;
+  display: block !important;
+  border-radius: 12px 12px 0 0 !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Ensure card sits above common overlays */
+  position: relative !important;
+  z-index: 99999 !important;
+  overflow: visible !important;
+}
+
+/* Text block and micro animation */
+.meet-dev-text-wrap { position: relative; display: inline-block; z-index: 6; margin: 0 auto; }
+.meet-dev-text {
+  position: relative; z-index: 7; max-width: 72ch; padding: 1.25rem 1.5rem; border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.12)); color: #ffffff !important;
+  text-align: center; backdrop-filter: blur(6px);
+}
+.meet-dev-animate { animation: meetDevIn 700ms cubic-bezier(.2,.9,.2,1) both; }
+@keyframes meetDevIn {
+  0% { opacity: 0; transform: translateY(8px) scale(.998); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Orbit path and orb around the text */
+  position: absolute; width: 16px; height: 16px; left: 50%; top: 0%;
+  transform-origin: center calc(50% + 34px); border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.98), rgba(58,12,120,0.88));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  transform: rotate(var(--orbit-rot)) translateY(calc(-50% - 34px)) rotate(calc(-1 * var(--orbit-rot)));
+  transition: transform 120ms linear;
+}
+
+/* Hover slow and reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .meet-dev-animate { animation: none !important; }
+}
+
+/* Defensive overlay adjustments (add project-specific overlay classes if needed) */
+.hero-overlay, .site-overlay { z-index: 1 !important; pointer-events: none !important; background: transparent !important; }
+
+/* Developer photo: use public/assets/dev-photo.png and ensure visible */
+.dev-photo {
+  background-image: url('/assets/dev-photo.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  min-height: 220px !important;
+  width: 100% !important;
+  display: block !important;
+  border-radius: 12px 12px 0 0 !important;
+  position: relative !important;
+  z-index: 3 !important;
+}
+
+/* Ensure card sits above common overlays */
+  position: relative !important;
+  z-index: 99999 !important;
+  overflow: visible !important;
+}
+
+/* Text block and micro animation */
+.meet-dev-text-wrap { position: relative; display: inline-block; z-index: 6; margin: 0 auto; }
+.meet-dev-text {
+  position: relative; z-index: 7; max-width: 72ch; padding: 1.25rem 1.5rem; border-radius: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.12)); color: #ffffff !important;
+  text-align: center; backdrop-filter: blur(6px);
+}
+.meet-dev-animate { animation: meetDevIn 700ms cubic-bezier(.2,.9,.2,1) both; }
+@keyframes meetDevIn {
+  0% { opacity: 0; transform: translateY(8px) scale(.998); }
+  60% { opacity: 1; transform: translateY(-2px) scale(1.002); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Orbit path and orb around the text */
+  position: absolute; width: 16px; height: 16px; left: 50%; top: 0%;
+  transform-origin: center calc(50% + 34px); border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(138,43,226,0.98), rgba(58,12,120,0.88));
+  box-shadow: 0 0 28px rgba(138,43,226,0.55), 0 0 60px rgba(58,12,120,0.25);
+  filter: blur(0.6px);
+  transform: rotate(var(--orbit-rot)) translateY(calc(-50% - 34px)) rotate(calc(-1 * var(--orbit-rot)));
+  transition: transform 120ms linear;
+}
+
+/* Hover slow and reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .meet-dev-animate { animation: none !important; }
+}
+
+/* Defensive overlay adjustments (add project-specific overlay classes if needed) */
+.hero-overlay, .site-overlay { z-index: 1 !important; pointer-events: none !important; background: transparent !important; }
+

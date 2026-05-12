@@ -1,0 +1,407 @@
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const bgImageUrl = "https://image.qwenlm.ai/public_source/adcaf59d-9e00-4ca3-a24a-b314347af840/10620a55c-87a0-4bfa-969a-947c37986454.png";
+
+const HERO_IMAGES = [
+  bgImageUrl,
+  "https://image.qwenlm.ai/public_source/adcaf59d-9e00-4ca3-a24a-b314347af840/10620a55c-87a0-4bfa-969a-947c37986454.png",
+];
+
+const TRUST_ITEMS = [
+  { icon: "★", text: "Trusted by 200+ startups & enterprises" },
+  { icon: "🔒", text: "Fast delivery, secure by design" },
+  { icon: "♿", text: "Design systems & WCAG accessibility" },
+  { icon: "📈", text: "Average 3x conversion improvement" },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.18, delayChildren: 0.15 },
+  },
+};
+
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] } },
+};
+
+const trustItemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: (index) => ({
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.5, delay: 0.8 + index * 0.12, ease: "easeOut" },
+  }),
+};
+
+export default function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [activeTrust, setActiveTrust] = useState(null);
+  const [bgReady, setBgReady] = useState(false);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: (e.clientX - rect.left) / rect.width - 0.5,
+      y: (e.clientY - rect.top) / rect.height - 0.5,
+    });
+  };
+
+  const handleExplore = (e) => {
+    e.preventDefault();
+    const el = document.getElementById("work");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const handleContact = (e) => {
+    e.preventDefault();
+    const el = document.getElementById("contact");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  return (
+    <>
+      <style>{`
+        @import url('https://cdn.fontsource.org/fontsource/inter/400.css');
+        @import url('https://cdn.fontsource.org/fontsource/inter/700.css');
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+          --zeal-primary: #c9a84c;
+          --zeal-primary-hover: #e0c068;
+          --zeal-bg-dark: #0a0a0f;
+          --zeal-bg-card: rgba(255,255,255,0.04);
+          --zeal-border: rgba(255,255,255,0.08);
+          --zeal-text: #f5f5f7;
+          --zeal-text-muted: #8a8a9a;
+          --zeal-glow: rgba(201,168,76,0.15);
+        }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--zeal-bg-dark); color: var(--zeal-text); overflow-x: hidden; }
+        .zeal-hero { position: relative; min-height: 100vh; display: flex; align-items: center; overflow: hidden; }
+        .hero-media { position: absolute; inset: 0; z-index: 0; }
+        .hero-media__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease-out; will-change: transform; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,15,0.92) 0%, rgba(10,10,15,0.75) 40%, rgba(10,10,15,0.6) 100%); z-index: 1; }
+        .hero-mesh-glow { position: absolute; width: 600px; height: 600px; border-radius: 50%; filter: blur(120px); opacity: 0.25; pointer-events: none; z-index: 1; transition: all 0.3s ease-out; }
+        .hero-body { position: relative; z-index: 2; width: 100%; max-width: 1280px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+        .hero-inner { max-width: 780px; }
+        .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.45rem 1rem; border-radius: 100px; background: var(--zeal-bg-card); border: 1px solid var(--zeal-border); font-size: 0.8rem; font-weight: 500; color: var(--zeal-primary); letter-spacing: 0.06em; text-transform: uppercase; backdrop-filter: blur(12px); margin-bottom: 2rem; }
+        .hero-badge__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--zeal-primary); animation: pulse-dot 2s ease-in-out infinite; }
+        @keyframes pulse-dot { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+        .hero-heading { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.03em; margin-bottom: 1.5rem; background: linear-gradient(135deg, #ffffff 0%, #c9a84c 50%, #ffffff 100%); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: shimmer-text 6s ease-in-out infinite; }
+        @keyframes shimmer-text { 0%, 100% { background-position: 0% center; } 50% { background-position: 200% center; } }
+        .hero-lead { font-size: clamp(1.05rem, 2vw, 1.25rem); line-height: 1.7; color: var(--zeal-text-muted); max-width: 600px; margin-bottom: 2.5rem; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.5rem; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.9rem 2rem; border-radius: 12px; font-size: 0.95rem; font-weight: 600; font-family: inherit; text-decoration: none; cursor: pointer; border: none; transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); position: relative; overflow: hidden; }
+        .btn-primary { background: linear-gradient(135deg, var(--zeal-primary) 0%, #a8882e 100%); color: #0a0a0f; box-shadow: 0 4px 24px var(--zeal-glow), 0 0 0 0 rgba(201,168,76,0); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(201,168,76,0.3), 0 0 0 0 rgba(201,168,76,0); filter: brightness(1.1); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); transform: translateX(-100%); transition: transform 0.5s; }
+        .btn-primary:hover::after { transform: translateX(100%); }
+        .btn-ghost { background: var(--zeal-bg-card); color: var(--zeal-text); border: 1px solid var(--zeal-border); backdrop-filter: blur(12px); }
+        .btn-ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(201,168,76,0.3); transform: translateY(-2px); color: var(--zeal-primary); }
+        .btn-arrow { transition: transform 0.3s; }
+        .btn:hover .btn-arrow { transform: translateX(4px); }
+        .hero-trust { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; }
+        .hero-trust__item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; color: var(--zeal-text-muted); padding: 0.5rem 1rem; border-radius: 8px; transition: all 0.3s; cursor: default; background: var(--zeal-bg-card); border: 1px solid transparent; }
+        .hero-trust__item:hover { background: rgba(201,168,76,0.06); border-color: var(--zeal-border); color: var(--zeal-text); transform: translateY(-1px); }
+        .hero-trust__item.active { background: rgba(201,168,76,0.1); border-color: rgba(201,168,76,0.25); color: var(--zeal-primary); }
+        .hero-trust__icon { font-size: 0.9rem; flex-shrink: 0; }
+        .hero-scroll-indicator { position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: var(--zeal-text-muted); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0; animation: fadeInUp 0.8s 2s forwards; }
+        .hero-scroll-indicator__mouse { width: 24px; height: 38px; border: 2px solid var(--zeal-border); border-radius: 12px; position: relative; }
+        .hero-scroll-indicator__wheel { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 3px; height: 8px; border-radius: 2px; background: var(--zeal-primary); animation: scroll-wheel 1.8s ease-in-out infinite; }
+        @keyframes scroll-wheel { 0% { opacity: 1; transform: translateX(-50%) translateY(0); } 100% { opacity: 0; transform: translateX(-50%) translateY(14px); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateX(-50%) translateY(20px); } to { opacity: 0.6; transform: translateX(-50%) translateY(0); } }
+        .hero-divider { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--zeal-border) 20%, var(--zeal-primary) 50%, var(--zeal-border) 80%, transparent); opacity: 0.5; }
+        .hero-floating-orb { position: absolute; border-radius: 50%; pointer-events: none; z-index: 1; }
+        .orb-1 { width: 300px; height: 300px; top: 10%; right: 5%; background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%); animation: float-orb 8s ease-in-out infinite; }
+        .orb-2 { width: 200px; height: 200px; bottom: 20%; right: 15%; background: radial-gradient(circle, rgba(147,120,200,0.06) 0%, transparent 70%); animation: float-orb 10s ease-in-out infinite reverse; }
+        @keyframes float-orb { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(20px, -30px); } 66% { transform: translate(-10px, 15px); } }
+        @media (max-width: 768px) {
+          .hero-body { padding: 6rem 1.5rem 3rem; }
+          .hero-heading { font-size: clamp(2rem, 8vw, 2.8rem); }
+          .hero-actions { flex-direction: column; }
+          .btn { justify-content: center; width: 100%; }
+          .hero-trust { flex-direction: column; gap: 0.5rem; }
+          .hero-floating-orb { display: none; }
+        }
+      `}</style>
+
+      <section
+        className="zeal-hero"
+        aria-labelledby="hero-title"
+        onMouseMove={handleMouseMove}
+        style={{ opacity: isLoaded ? 1 : 0, transition: "opacity 0.8s" }}
+      >
+        <div className="hero-media" aria-hidden="true">
+          <canvas className="hero-flame-canvas" aria-hidden="true" />
+          <canvas className="hero-flame-canvas" aria-hidden="true" />
+          <img
+            className="hero-media__img"
+            src={HERO_IMAGES[0]}
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+            onLoad={() => setBgReady(true)}
+            style={{
+              transform: `scale(1.08) translate(${mousePosition.x * -15}px, ${mousePosition.y * -10}px)`,
+            }}
+          />
+          <div className="hero-overlay" />
+        </div>
+
+        <div className="hero-floating-orb orb-1" />
+        <div className="hero-floating-orb orb-2" />
+
+        <div
+          className="hero-mesh-glow"
+          style={{
+            top: `${50 + mousePosition.y * 30}%`,
+            left: `${50 + mousePosition.x * 40}%`,
+            background: "radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%)",
+          }}
+        />
+
+        <div className="hero-body">
+          <div className="hero-inner">
+            <motion.div variants={containerVariants} initial="hidden" animate="visible">
+              <motion.div variants={fadeUpVariants}>
+                <div className="hero-badge">
+                  <span className="hero-badge__dot" />
+                  Available for Q3 projects
+                </div>
+              </motion.div>
+
+              <motion.h1 id="hero-title" className="hero-heading" variants={fadeUpVariants}>
+                We build premium<br />digital platforms
+              </motion.h1>
+
+              <motion.p className="hero-lead" variants={fadeUpVariants}>
+                ZEAL crafts high‑performance websites and apps that look expensive, convert reliably, and scale with your business.
+              </motion.p>
+
+              <motion.div className="hero-actions" variants={fadeUpVariants}>
+                <a className="btn btn-primary" href="#work" onClick={handleExplore} role="button">
+                  Explore our work
+                  <span className="btn-arrow">→</span>
+                </a>
+
+                <a className="btn btn-ghost" href="#contact" onClick={handleContact} role="button">
+                  Book a demo
+                  <span className="btn-arrow"></span>
+                </a>
+              </motion.div>
+
+              <ul className="hero-trust">
+                {TRUST_ITEMS.map((item, index) => (
+                  <motion.li
+                    key={index}
+                    className={`hero-trust__item${activeTrust === index ? " active" : ""}`}
+                    variants={trustItemVariants}
+                    custom={index}
+                    onMouseEnter={() => setActiveTrust(index)}
+                    onMouseLeave={() => setActiveTrust(null)}
+                  >
+                    <span className="hero-trust__icon">{item.icon}</span>
+                    {item.text}
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
+        </div>
+
+        <div className="hero-scroll-indicator" aria-hidden="true">
+          <div className="hero-scroll-indicator__mouse">
+            <div className="hero-scroll-indicator__wheel" />
+          </div>
+          <span>Scroll</span>
+        </div>
+
+        <div className="hero-divider" />
+      </section>
+
+
+    </>
+  );
+}
+
+// Flame / flying colors particle overlay
+import { useRef } from 'react';
+
+useEffect(() => {
+  const canvas = document.querySelector('.hero-flame-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = canvas.clientWidth;
+  let h = canvas.height = canvas.clientHeight;
+  let raf = null;
+  const particles = [];
+  const maxParticles = Math.max(24, Math.floor(w * 0.02)); // density based on width
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function createParticle() {
+    const size = rand(8, 36);
+    const x = rand(w * 0.15, w * 0.85);
+    const y = h + size;
+    const vx = rand(-0.25, 0.25);
+    const vy = rand(-0.6, -1.6);
+    const hue = rand(20, 320); // varied color range
+    const life = rand(2.6, 5.2);
+    return { x, y, vx, vy, size, hue, life, age: 0, alpha: rand(0.18, 0.9) };
+  }
+
+  function resize() {
+    w = canvas.width = canvas.clientWidth;
+    h = canvas.height = canvas.clientHeight;
+  }
+
+  function step(ts) {
+    ctx.clearRect(0, 0, w, h);
+    // spawn
+    if (particles.length < maxParticles && Math.random() < 0.6) {
+      particles.push(createParticle());
+    }
+    // update & draw
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= 1 + (Math.random() - 0.5) * 0.02;
+      p.vy -= 0.002 * Math.random();
+      p.age += 1/60;
+      const t = p.age / p.life;
+      const size = p.size * (1 + t * 0.6);
+      const alpha = p.alpha * (1 - t);
+      // radial gradient for soft flame
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 1.6);
+      g.addColorStop(0, `hsla(${p.hue}, 95%, 60%, ${alpha})`);
+      g.addColorStop(0.35, `hsla(${(p.hue + 30) % 360}, 85%, 48%, ${alpha * 0.6})`);
+      g.addColorStop(0.7, `hsla(${(p.hue + 60) % 360}, 70%, 40%, ${alpha * 0.18})`);
+      g.addColorStop(1, `rgba(0,0,0,0)`);
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+      ctx.fill();
+      // remove dead
+      if (p.age > p.life || p.y + size < -50) particles.splice(i, 1);
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  // start
+  window.addEventListener('resize', resize);
+  resize();
+  raf = requestAnimationFrame(step);
+
+  // gentle parallax with mouse
+  const hero = document.querySelector('.zeal-hero');
+  function onMove(e) {
+    const rect = hero.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) / rect.width - 0.5;
+    const my = (e.clientY - rect.top) / rect.height - 0.5;
+    canvas.style.transform = `translate(${mx * 6}px, ${my * 6}px)`;
+  }
+  hero && hero.addEventListener('mousemove', onMove);
+
+  return () => {
+    cancelAnimationFrame(raf);
+    window.removeEventListener('resize', resize);
+    hero && hero.removeEventListener('mousemove', onMove);
+  };
+}, []);
+
+// Flame / flying colors particle overlay
+import { useRef } from 'react';
+
+useEffect(() => {
+  const canvas = document.querySelector('.hero-flame-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = canvas.clientWidth;
+  let h = canvas.height = canvas.clientHeight;
+  let raf = null;
+  const particles = [];
+  const maxParticles = Math.max(24, Math.floor(w * 0.02)); // density based on width
+
+  function rand(min, max) { return Math.random() * (max - min) + min; }
+
+  function createParticle() {
+    const size = rand(8, 36);
+    const x = rand(w * 0.15, w * 0.85);
+    const y = h + size;
+    const vx = rand(-0.25, 0.25);
+    const vy = rand(-0.6, -1.6);
+    const hue = rand(20, 320); // varied color range
+    const life = rand(2.6, 5.2);
+    return { x, y, vx, vy, size, hue, life, age: 0, alpha: rand(0.18, 0.9) };
+  }
+
+  function resize() {
+    w = canvas.width = canvas.clientWidth;
+    h = canvas.height = canvas.clientHeight;
+  }
+
+  function step(ts) {
+    ctx.clearRect(0, 0, w, h);
+    // spawn
+    if (particles.length < maxParticles && Math.random() < 0.6) {
+      particles.push(createParticle());
+    }
+    // update & draw
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= 1 + (Math.random() - 0.5) * 0.02;
+      p.vy -= 0.002 * Math.random();
+      p.age += 1/60;
+      const t = p.age / p.life;
+      const size = p.size * (1 + t * 0.6);
+      const alpha = p.alpha * (1 - t);
+      // radial gradient for soft flame
+      const g = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 1.6);
+      g.addColorStop(0, `hsla(${p.hue}, 95%, 60%, ${alpha})`);
+      g.addColorStop(0.35, `hsla(${(p.hue + 30) % 360}, 85%, 48%, ${alpha * 0.6})`);
+      g.addColorStop(0.7, `hsla(${(p.hue + 60) % 360}, 70%, 40%, ${alpha * 0.18})`);
+      g.addColorStop(1, `rgba(0,0,0,0)`);
+      ctx.globalCompositeOperation = 'lighter';
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+      ctx.fill();
+      // remove dead
+      if (p.age > p.life || p.y + size < -50) particles.splice(i, 1);
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  // start
+  window.addEventListener('resize', resize);
+  resize();
+  raf = requestAnimationFrame(step);
+
+  // gentle parallax with mouse
+  const hero = document.querySelector('.zeal-hero');
+  function onMove(e) {
+    const rect = hero.getBoundingClientRect();
+    const mx = (e.clientX - rect.left) / rect.width - 0.5;
+    const my = (e.clientY - rect.top) / rect.height - 0.5;
+    canvas.style.transform = `translate(${mx * 6}px, ${my * 6}px)`;
+  }
+  hero && hero.addEventListener('mousemove', onMove);
+
+  return () => {
+    cancelAnimationFrame(raf);
+    window.removeEventListener('resize', resize);
+    hero && hero.removeEventListener('mousemove', onMove);
+  };
+}, []);
