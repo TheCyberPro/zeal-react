@@ -69,7 +69,7 @@ const handleExplore = (e) => {
   e.preventDefault();
   // Only allow scrolling for genuine user actions (clicks, keyboard)
   if (!e?.isTrusted) return;
-  safeScrollTo('work');
+  safeScrollTo('hero');
 };
 
 const handleContact = (e) => {
