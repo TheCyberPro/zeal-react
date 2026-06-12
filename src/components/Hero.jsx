@@ -53,11 +53,6 @@ export default function Hero() {
 
 
 
-    // Do not auto-scroll on page load.
-    // Replace direct scroll calls with a safe helper that only scrolls when:
-    //  - the element has data-allow-scroll="true", or
-    //  - a developer enables window.__ALLOW_SCROLL in the console for debugging,
-    //  - or you explicitly call safeScrollToId from a user interaction (click).
     function safeScrollToId(id) {
       const el = document.getElementById(id);
       if (!el) return;
@@ -65,10 +60,6 @@ export default function Hero() {
         el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     }
-
-    // Example: call safeScrollToId('work') from a click handler instead of auto-running here.
-    // If you want to preserve hash navigation without auto-scrolling, uncomment:
-    // if (location.hash === '#work') safeScrollToId('work');
 
 
 
