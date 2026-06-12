@@ -43,7 +43,7 @@ export default function HomePage() {
       <Hero />
       <main>
         <ServicesSlider items={services} />
-	<MarellSection />
+        <MarellSection />
         <Highlights items={highlights} />
         <Testimonials items={testimonials} />
         <InstagramCard />
