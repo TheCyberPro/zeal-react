@@ -56,25 +56,6 @@ export default function Hero() {
 
 
 
-// Put this inside your Hero component (replace your existing handlers)
-const safeScrollTo = (id) => {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-};
-
-const handleExplore = (e) => {
-  e.preventDefault();
-  // Only allow scrolling for genuine user interactions
-  if (!e?.isTrusted) return;
-  safeScrollTo('work');
-};
-
-const handleContact = (e) => {
-  e.preventDefault();
-  if (!e?.isTrusted) return;
-  safeScrollTo('contact');
-};
 
 
 
