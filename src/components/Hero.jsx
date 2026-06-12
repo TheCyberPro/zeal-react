@@ -53,13 +53,6 @@ export default function Hero() {
 
 
 
-    function safeScrollToId(id) {
-      const el = document.getElementById(id);
-      if (!el) return;
-      if (el.dataset.allowScroll === 'true' || window.__ALLOW_SCROLL) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    }
 
 
 
