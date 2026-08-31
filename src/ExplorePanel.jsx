@@ -1,6 +1,6 @@
 // src/components/ExplorePanel.jsx
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { UiContext } from "../contexts/UiContext";
+import { UiContext } from "./UiContext";
 
 /**
  * ExplorePanel (Luxury Edition)

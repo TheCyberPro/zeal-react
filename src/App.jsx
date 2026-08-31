@@ -1,81 +1,68 @@
 // src/App.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-
-
-
-
-
-
-
-
-import "./fonts.css";
-import "./assets/css/styles.css";
-
 /* Contexts */
-import { UiProvider } from "./contexts/UiContext";
-import { AuthProvider } from "./contexts/AuthContext";
+import { UiProvider, UiContext } from "./UiContext";
+import { AuthProvider } from "./AuthContext";
 
 /* Pages */
-import HomePage from "./pages/HomePage";
-import Marell from "./pages/Marell/Marell";
-import Calculator from "./pages/Marell/Calculator";
-import Login from "./pages/Marell/Login";
-import Register from "./pages/Marell/Register";
-import Forgot from "./pages/Marell/Forgot";
-import Terms from "./pages/Marell/Terms";
-import Privacy from "./pages/Marell/Privacy";
-import Contact from "./pages/Marell/Contact";
+import HomePage from "./Homepage";
+import Marell from "./Marell";
+import Calculator from "./Calculator";
+import Login from "./Login";
+import Register from "./Register";
+import Forgot from "./Forgot";
+import Terms from "./Terms";
+import Privacy from "./Privacy";
+import Contact from "./Contact";
 
 /* Components */
-import Header from "./components/Header";
-import ExplorePanel from "./components/ExplorePanel";
-import Hero from "./components/Hero";
-import MarellSection from "./components/MarellSection";
-import ServicesSlider from "./components/ServicesSlider";
-import Highlights from "./components/Highlights";
-import MeetDeveloper from "./components/MeetDeveloper";
-import Testimonials from "./components/Testimonials";
-import ContactCTA from "./components/ContactCTA";
-import Footer from "./components/Footer";
-import ProtectedRoute from "./components/ProtectedRoute";
+import Header from "./Header";
+import ExplorePanel from "./ExplorePanel";
+import Hero from "./Hero";
+import MarellSection from "./MarellSection";
+import ServicesSlider from "./ServicesSlider";
+import Highlights from "./Highlights";
+import MeetDeveloper from "./MeetDeveloper";
+import Testimonials from "./Testimonials";
+import ContactCTA from "./ContactCTA";
+import Footer from "./Footer";
+import ProtectedRoute from "./ProtectedRoute";
 
-/* Optional extras removed: InstagramCard, DeveloperCard, Slider */
-
-/* Landing composition (render components directly, with safe wrappers) */
-function Landing({
-  onHeaderMenuToggle,
-  headerMenuOpen,
-  openHeaderMenu,
-  closeHeaderMenu,
-}) {
-  const [isExploreOpen, setIsExploreOpen] = useState(false);
+/* Landing composition */
+function Landing() {
+  // Connect to UiContext to control the explore panel (matches ExplorePanel.jsx logic)
+  const ui = useContext(UiContext);
+  
+  const [headerMenuOpen, setHeaderMenuOpen] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = isExploreOpen ? "hidden" : "";
+    const isOpen = headerMenuOpen || (ui && ui.exploreOpen);
+    document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [isExploreOpen]);
+  }, [headerMenuOpen, ui?.exploreOpen]);
 
-  const openExplore = () => setIsExploreOpen(true);
-  const closeExplore = () => setIsExploreOpen(false);
-  const toggleExplore = () => setIsExploreOpen((s) => !s);
+  const toggleHeaderMenu = () => setHeaderMenuOpen((s) => !s);
+  const closeHeaderMenu = () => setHeaderMenuOpen(false);
+  const openHeaderMenu = () => setHeaderMenuOpen(true);
+
+  // Safely toggle explore panel via context
+  const toggleExplore = ui?.setExploreOpen ? () => ui.setExploreOpen((prev) => !prev) : () => {};
 
   return (
     <div className="app-root">
       <Header
         isMenuOpen={headerMenuOpen}
-        onExploreToggle={toggleExplore}
-        onExploreOpen={openExplore}
-        onExploreClose={closeExplore}
-        onMenuToggle={onHeaderMenuToggle}
+        onMenuToggle={toggleHeaderMenu}
         openMenu={openHeaderMenu}
         closeMenu={closeHeaderMenu}
+        onExploreToggle={toggleExplore}
       />
 
-      <ExplorePanel isOpen={isExploreOpen} onClose={closeExplore} />
+      <ExplorePanel />
 
       <main style={{ paddingTop: 80 }}>
         <Hero />
@@ -100,7 +87,6 @@ function Landing({
           <Testimonials />
         </div>
 
-        {/* Contact CTA only (InstagramCard and DeveloperCard removed) */}
         <div className="container contact-cta-wrapper">
           <div className="contact-cta-block">
             <ContactCTA />
@@ -113,45 +99,21 @@ function Landing({
   );
 }
 
-/* App root with routes and header menu wiring */
+/* App root with routes */
 export default function App() {
-  const [headerMenuOpen, setHeaderMenuOpen] = useState(false);
-
-  useEffect(() => {
-    document.body.style.overflow = headerMenuOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [headerMenuOpen]);
-
-  const toggleHeaderMenu = () => setHeaderMenuOpen((s) => !s);
-  const closeHeaderMenu = () => setHeaderMenuOpen(false);
-  const openHeaderMenu = () => setHeaderMenuOpen(true);
-
   return (
     <UiProvider>
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route
-              path="/"
-              element={
-                <Landing
-                  onHeaderMenuToggle={toggleHeaderMenu}
-                  headerMenuOpen={headerMenuOpen}
-                  openHeaderMenu={openHeaderMenu}
-                  closeHeaderMenu={closeHeaderMenu}
-                />
-              }
-            />
+            <Route path="/" element={<Landing />} />
             <Route path="/home" element={<HomePage />} />
 
             {/* Auth routes */}
             <Route path="/marell/login" element={<Login />} />
             <Route path="/marell/register" element={<Register />} />
             <Route path="/marell/forgot" element={<Forgot />} />
-<Route path="/marell/Marell" element={<Marell />} />
-
+            <Route path="/marell/Marell" element={<Marell />} />
 
             {/* Public pages */}
             <Route path="/terms" element={<Terms />} />
@@ -160,23 +122,17 @@ export default function App() {
             <Route path="/marell/calculator" element={<Calculator />} />
 
             {/* Protected Marell area */}
-            <Route path="/Marell/Marell"element={ <ProtectedRoute> <Marell />
+            <Route 
+              path="/Marell/Marell" 
+              element={
+                <ProtectedRoute> 
+                  <Marell />
                 </ProtectedRoute>
-              }
+              } 
             />
 
             {/* Fallback: show Landing */}
-            <Route
-              path="*"
-              element={
-                <Landing
-                  onHeaderMenuToggle={toggleHeaderMenu}
-                  headerMenuOpen={headerMenuOpen}
-                  openHeaderMenu={openHeaderMenu}
-                  closeHeaderMenu={closeHeaderMenu}
-                />
-              }
-            />
+            <Route path="*" element={<Landing />} />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

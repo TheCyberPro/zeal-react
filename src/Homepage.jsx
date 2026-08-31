@@ -1,15 +1,15 @@
 import React from "react";
-import Header from "../components/Header";
-import Hero from "../components/Hero";
-import ExplorePanel from "../components/ExplorePanel";
-import MarellSection from "../components/MarellSection";
-import Footer from "../components/Footer";
-import ServicesSlider from "../components/ServicesSlider";
-import Highlights from "../components/Highlights";
-import Testimonials from "../components/Testimonials";
-import InstagramCard from "../components/InstagramCard";
-import DeveloperCard from "../components/DeveloperCard";
-import ContactCTA from "../components/ContactCTA";
+import Header from "./Header";
+import Hero from "./Hero";
+import ExplorePanel from "./ExplorePanel";
+import MarellSection from "./MarellSection";
+import Footer from "./Footer";
+import ServicesSlider from "./ServicesSlider";
+import Highlights from "./Highlights";
+import Testimonials from "./Testimonials";
+import InstagramCard from "./InstagramCard";
+import DeveloperCard from "./DeveloperCard";
+import ContactCTA from "./ContactCTA";
 
 export default function HomePage() {
   const services = [
