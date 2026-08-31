@@ -1,12 +1,3 @@
-// src/components/ExplorePanel.jsx
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { UiContext } from "./UiContext";
-
-/**
- * ExplorePanel (Luxury Edition)
- * 
- * - Close button pinned to the far right.
- * - Spacious padding to prevent overlap with top controls.
  * - Refined "Web Development" column spacing.
  * - Gold accents, smooth transitions, and glassmorphism.
  * - Fully accessible focus trap and keyboard navigation.
