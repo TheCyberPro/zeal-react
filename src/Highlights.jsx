@@ -119,7 +119,7 @@ const CardIcon = ({ type }) => (
   </svg>
 );
 
-export default function App() {
+export default function Highlights() {
   const trackRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
@@ -192,7 +192,7 @@ export default function App() {
   };
 
   return (
-    <div className="app-wrapper">
+    <>
       <div
         className="highlights-container"
         role="region"
@@ -262,32 +262,16 @@ export default function App() {
       </div>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
-
-        *, *::before, *::after {
-          box-sizing: border-box;
-          margin: 0;
-          padding: 0;
-        }
-
-        .app-wrapper {
-          width: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: #0b0c10;
-          font-family: 'Inter', system-ui, -apple-system, sans-serif;
-          color: #d6d6db;
-          padding: 1.5rem 1rem;
-        }
-
         .highlights-container {
-          max-width: 1200px;
           width: 100%;
+          max-width: 1200px;
+          margin: 0 auto;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 1rem;
+          padding: 1.5rem 1rem;
+          background-color: #0b0c10;
         }
 
         .highlights-track {
@@ -329,7 +313,7 @@ export default function App() {
           display: flex;
           flex-direction: column;
           position: relative;
-          overflow: visible; 
+          overflow: visible;
         }
 
         .highlight-card::before {
@@ -465,7 +449,7 @@ export default function App() {
         }
 
         @media (max-width: 520px) {
-          .app-wrapper {
+          .highlights-container {
             padding: 1rem 0.25rem;
           }
           .highlights-track {
@@ -494,6 +478,6 @@ export default function App() {
           }
         }
       `}</style>
-    </div>
+    </>
   );
 }
