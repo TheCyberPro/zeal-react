@@ -32,9 +32,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 /* Landing composition */
 function Landing() {
-  // Connect to UiContext to control the explore panel (matches ExplorePanel.jsx logic)
   const ui = useContext(UiContext);
-  
   const [headerMenuOpen, setHeaderMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -49,7 +47,6 @@ function Landing() {
   const closeHeaderMenu = () => setHeaderMenuOpen(false);
   const openHeaderMenu = () => setHeaderMenuOpen(true);
 
-  // Safely toggle explore panel via context
   const toggleExplore = ui?.setExploreOpen ? () => ui.setExploreOpen((prev) => !prev) : () => {};
 
   return (
@@ -113,7 +110,6 @@ export default function App() {
             <Route path="/marell/login" element={<Login />} />
             <Route path="/marell/register" element={<Register />} />
             <Route path="/marell/forgot" element={<Forgot />} />
-            <Route path="/marell/Marell" element={<Marell />} />
 
             {/* Public pages */}
             <Route path="/terms" element={<Terms />} />
@@ -122,13 +118,13 @@ export default function App() {
             <Route path="/marell/calculator" element={<Calculator />} />
 
             {/* Protected Marell area */}
-            <Route 
-              path="/Marell/Marell" 
+            <Route
+              path="/marell"
               element={
-                <ProtectedRoute> 
+                <ProtectedRoute>
                   <Marell />
                 </ProtectedRoute>
-              } 
+              }
             />
 
             {/* Fallback: show Landing */}

@@ -1,4 +1,3 @@
-// src/contexts/AuthContext.jsx
 import React, { createContext, useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +7,7 @@ export function AuthProvider({ children }) {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
-  // load persisted auth on mount
+  // Load persisted auth on mount
   useEffect(() => {
     const raw = localStorage.getItem("marell_auth");
     if (raw) {
@@ -37,53 +36,56 @@ export function AuthProvider({ children }) {
    * - Looks up users in localStorage key "marell_users".
    * - If found, sets user object with role and balance.
    * - Redirects to /marell (admins get ?admin=1).
+   * - Returns { success: boolean, error?: string, user?: object }
    *
    * NOTE: Replace with server-side auth in production.
    */
-  function login({ phone, password }) {
-    // demo: find user in marell_users
-    const raw = localStorage.getItem("marell_users");
-    const users = raw ? JSON.parse(raw) : [];
+  const login = useCallback(({ phone, password }) => {
+    try {
+      const raw = localStorage.getItem("marell_users");
+      const users = raw ? JSON.parse(raw) : [];
 
-    // find exact match (demo). In production, call your API.
-    const found = users.find((u) => u.phone === phone && u.password === password);
+      const found = users.find((u) => u.phone === phone && u.password === password);
 
-    if (!found) {
-      // For demo convenience, do not auto-create here; throw so UI can show error.
-      throw new Error("Invalid credentials");
+      if (!found) {
+        return { success: false, error: "Invalid credentials" };
+      }
+
+      const u = {
+        phone: found.phone,
+        role: found.role || "user",
+        balance: found.balance || 0,
+        createdAt: found.createdAt || new Date().toISOString(),
+      };
+
+      persistUser(u);
+
+      if (u.role === "admin") {
+        navigate("/marell?admin=1");
+      } else {
+        navigate("/Marell");
+      }
+
+      return { success: true, user: u };
+    } catch (err) {
+      return { success: false, error: err.message || "Login failed" };
     }
-
-    const u = {
-      phone: found.phone,
-      role: found.role || "user",
-      balance: found.balance || 0,
-      createdAt: found.createdAt || new Date().toISOString(),
-      // token can be added when using real auth
-    };
-
-    persistUser(u);
-
-    // redirect: admins get a query param so Marell can open admin console
-    if (u.role === "admin") navigate("/marell?admin=1");
-    else navigate("/Marell");
-
-    return u;
-  }
+  }, [navigate, persistUser]);
 
   /**
    * logout
    */
-  function logout() {
+  const logout = useCallback(() => {
     localStorage.removeItem("marell_auth");
     setUser(null);
     navigate("/marell/login");
-  }
+  }, [navigate]);
 
   /**
    * refreshUser
    * - Re-reads the persisted user (useful after admin deposits update marell_users)
    */
-  function refreshUser() {
+  const refreshUser = useCallback(() => {
     const raw = localStorage.getItem("marell_auth");
     if (!raw) {
       setUser(null);
@@ -91,7 +93,6 @@ export function AuthProvider({ children }) {
     }
     try {
       const u = JSON.parse(raw);
-      // refresh balance from marell_users if present
       const usersRaw = localStorage.getItem("marell_users");
       if (usersRaw) {
         const users = JSON.parse(usersRaw);
@@ -108,14 +109,14 @@ export function AuthProvider({ children }) {
       setUser(null);
       return null;
     }
-  }
+  }, []);
 
   /**
    * openSupportChat
    * - Attempts to open tawk.to widget and attach visitor context.
    * - Safe to call anywhere in the app.
    */
-  function openSupportChat(context = {}) {
+  const openSupportChat = useCallback((context = {}) => {
     try {
       if (typeof window !== "undefined" && window.Tawk_API) {
         const attrs = {
@@ -126,18 +127,16 @@ export function AuthProvider({ children }) {
           if (window.Tawk_API.popup) window.Tawk_API.popup();
         });
       } else {
-        // fallback: navigate to contact page
         navigate("/contact");
       }
-    } catch (err) {
-      // silent fail; fallback to contact page
+    } catch {
       navigate("/contact");
     }
-  }
+  }, [user, navigate]);
 
   const value = {
     user,
-    setUser: (u) => persistUser(u),
+    setUser: persistUser,
     login,
     logout,
     refreshUser,

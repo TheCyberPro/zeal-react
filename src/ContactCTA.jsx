@@ -81,7 +81,7 @@ export default function ContactCTA({
   }
 
   function openEmail(subject = "Request from site", body = "") {
-    const href = `mailto:${encodeURIComponent(adminEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const href = `mailto:${adminEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.location.href = href;
   }
 
@@ -195,7 +195,7 @@ export default function ContactCTA({
           content: "";
           position: absolute;
           inset: 0;
-          background-image: url("image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
           background-size: 180px;
           pointer-events: none;
           z-index: 0;
@@ -538,6 +538,7 @@ export default function ContactCTA({
       `}</style>
 
       <section
+        id="contact"
         ref={rootRef}
         className="contact-cta-lux"
         role="region"
@@ -694,9 +695,7 @@ export default function ContactCTA({
 
         <div className="cta-footer-bridge">
           <div className="footer-bridge-content">
-
             <nav className="footer-bridge-links" aria-label="Footer quick links">
-
             </nav>
           </div>
         </div>

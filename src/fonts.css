@@ -1,5 +1,5 @@
-/* paste the CSS from step 3 here (replace filenames if needed) */
 /* src/fonts.css — global Neo font definitions */
+
 @font-face {
   font-family: "NeoFG";
   src: url("/fonts/Neo.ttf") format("truetype");
@@ -7,9 +7,9 @@
   font-style: normal;
   font-display: swap;
 }
+
 @font-face {
   font-family: "NeoFG";
-  /* if you have a bold file later, add it here; for now we reuse the same file */
   src: url("/fonts/Neo.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;

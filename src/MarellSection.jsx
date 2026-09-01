@@ -1,4 +1,3 @@
-// src/components/MarellSection.jsx
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -20,7 +19,7 @@ export default function MarellSection() {
           --radius-pill: 999px;
           --radius-card: 14px;
           --ease-premium: cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          
+
           position: relative;
           padding: 8rem 1.5rem;
           background: radial-gradient(120% 100% at 50% 0%, var(--bg-mid) 0%, var(--bg-deep) 70%);
@@ -199,6 +198,11 @@ export default function MarellSection() {
           box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
+        .btn:focus-visible {
+          outline: 2px solid var(--accent-gold-bright);
+          outline-offset: 3px;
+        }
+
         @keyframes fadeSlide {
           from { opacity: 0; transform: translateY(16px); }
           to { opacity: 1; transform: translateY(0); }
@@ -214,10 +218,14 @@ export default function MarellSection() {
             transition-duration: 0.01ms !important;
             transform: none !important;
           }
+          .marell-section .container {
+            opacity: 1 !important;
+            transform: none !important;
+          }
         }
       `}</style>
 
-      <section className="marell-section" aria-labelledby="marell-heading">
+      <section id="marell" className="marell-section" aria-labelledby="marell-heading">
         <div className="container">
           <div className="marell-reviews" role="img" aria-label="5 star rating">
             <span aria-hidden="true">★★★★★</span>
