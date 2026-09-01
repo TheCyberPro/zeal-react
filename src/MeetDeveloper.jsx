@@ -5,14 +5,11 @@ export default function MeetDeveloper() {
   const cardRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
-  const [isHoveringCard, setIsHoveringCard] = useState(false);
 
-  // Respect reduced motion
   const prefersReducedMotion =
     typeof window !== "undefined" &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Scroll reveal
   useEffect(() => {
     if (prefersReducedMotion) {
       setIsVisible(true);
@@ -33,7 +30,6 @@ export default function MeetDeveloper() {
     return () => observer.disconnect();
   }, [prefersReducedMotion]);
 
-  // Mouse-tracking ambient glow
   const handleMouseMove = useCallback((e) => {
     if (!cardRef.current || prefersReducedMotion) return;
     const rect = cardRef.current.getBoundingClientRect();
@@ -47,9 +43,8 @@ export default function MeetDeveloper() {
     <>
       <style>{`
         .meet-developer-heavenly {
-          /* Match ContactCTA background exactly for seamless blend */
           --md-bg-deep: #040508;
-          --md-bg-top: #0c0e14; 
+          --md-bg-top: #0c0e14;
           --md-card-surface: rgba(255, 255, 255, 0.02);
           --md-card-border: rgba(255, 255, 255, 0.06);
           --md-card-highlight: rgba(255, 255, 255, 0.12);
@@ -64,7 +59,6 @@ export default function MeetDeveloper() {
           --md-trans-bounce: 0.6s var(--md-ease-spring);
 
           position: relative;
-          /* Removed bottom padding to allow seamless merge with ContactCTA */
           padding: clamp(6rem, 10vw, 9rem) 1.5rem 0;
           background: radial-gradient(ellipse 130% 80% at 50% 0%, var(--md-bg-top) 0%, var(--md-bg-deep) 65%);
           overflow: hidden;
@@ -78,7 +72,7 @@ export default function MeetDeveloper() {
           content: "";
           position: absolute;
           inset: 0;
-          background-image: url("image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
           background-size: 140px;
           pointer-events: none;
           z-index: 0;
@@ -86,7 +80,6 @@ export default function MeetDeveloper() {
           opacity: 0.6;
         }
 
-        /* Ambient light effects */
         .ambient-aurora {
           position: absolute;
           inset: 0;
@@ -143,8 +136,8 @@ export default function MeetDeveloper() {
           flex-direction: column;
           align-items: center;
           gap: 2.5rem;
-          transition: 
-            opacity var(--md-trans-smooth), 
+          transition:
+            opacity var(--md-trans-smooth),
             transform var(--md-trans-smooth),
             border-color 0.5s ease,
             box-shadow 0.5s ease;
@@ -154,7 +147,7 @@ export default function MeetDeveloper() {
           overflow: hidden;
           cursor: default;
         }
-        
+
         .meet-dev-card.reveal {
           opacity: 1;
           transform: translateY(0) scale(1);
@@ -168,7 +161,6 @@ export default function MeetDeveloper() {
             inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
 
-        /* Dynamic mouse glow */
         .meet-dev-card::before {
           content: "";
           position: absolute;
@@ -186,7 +178,6 @@ export default function MeetDeveloper() {
           opacity: 1;
         }
 
-        /* Top gold accent line */
         .card-accent-line {
           position: absolute;
           top: 0;
@@ -248,7 +239,6 @@ export default function MeetDeveloper() {
           letter-spacing: -0.01em;
         }
 
-        /* Improved Button */
         .cta-heavenly {
           position: relative;
           display: inline-flex;
@@ -269,21 +259,19 @@ export default function MeetDeveloper() {
           overflow: hidden;
           cursor: pointer;
           will-change: transform, box-shadow;
-          
           opacity: 0;
           transform: translateY(20px) scale(0.95);
-          transition: 
-            opacity 0.6s ease 0.3s, 
+          transition:
+            opacity 0.6s ease 0.3s,
             transform 0.6s var(--md-ease-spring) 0.3s,
             box-shadow 0.4s var(--md-ease-lux);
         }
-        
+
         .meet-dev-card.reveal .cta-heavenly {
           opacity: 1;
           transform: translateY(0) scale(1);
         }
 
-        /* Button Shine Effect */
         .cta-heavenly::before {
           content: "";
           position: absolute;
@@ -294,7 +282,7 @@ export default function MeetDeveloper() {
           z-index: 1;
         }
         .cta-heavenly:hover::before { left: 150%; }
-        
+
         .cta-heavenly:hover {
           transform: translateY(-4px) scale(1.02);
           box-shadow:
@@ -302,7 +290,7 @@ export default function MeetDeveloper() {
             inset 0 1px 0 rgba(255, 255, 255, 0.6),
             0 0 0 1px rgba(245, 215, 110, 0.3);
         }
-        
+
         .cta-heavenly:active {
           transform: translateY(-1px) scale(0.98) !important;
           transition-duration: 0.1s;
@@ -313,7 +301,6 @@ export default function MeetDeveloper() {
           outline-offset: 6px;
         }
 
-        /* Button Icon */
         .btn-icon {
           margin-right: 8px;
           transition: transform 0.3s ease;
@@ -341,7 +328,7 @@ export default function MeetDeveloper() {
 
       <section
         className="meet-developer-heavenly"
-        aria-labelledby="meet-dev-title"
+        aria-label="Meet the developer"
         role="region"
         ref={sectionRef}
       >
@@ -355,26 +342,22 @@ export default function MeetDeveloper() {
             className={`meet-dev-card ${isVisible ? "reveal" : ""}`}
             ref={cardRef}
             onMouseMove={handleMouseMove}
-            onMouseEnter={() => setIsHoveringCard(true)}
-            onMouseLeave={() => setIsHoveringCard(false)}
             style={{
               "--mx": `${mousePos.x}%`,
               "--my": `${mousePos.y}%`
             }}
-            role="region"
-            aria-label="Meet the developer"
           >
             <div className="card-accent-line" />
-            
+
             <p className="meet-dev-eyebrow">The Mind Behind ZEAL</p>
-            
-            <p className="meet-dev-copy" id="meet-dev-title">
+
+            <p className="meet-dev-copy">
               <strong>ZEAL</strong> — We build trust into every pixel and craft platforms that feel expensive, move fast, and scale cleanly. From glowing brand visuals to disciplined engineering, we design and develop premium websites, apps, and onboarding flows that speak your customer's language and strengthen your brand's authority.
             </p>
-            
-            <a 
-              className="cta-heavenly" 
-              href="#contact" 
+
+            <a
+              className="cta-heavenly"
+              href="#contact"
               aria-label="Book a Free Consultation"
             >
               <svg className="btn-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

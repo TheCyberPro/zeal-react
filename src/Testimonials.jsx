@@ -15,7 +15,13 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
   const containerRef = useRef(null);
 
   const track = useCallback((event, label) => {
-    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event, label }); } catch (e) {}
+    try {
+      if (typeof window !== "undefined" && window.dataLayer) {
+        window.dataLayer.push({ event, label });
+      }
+    } catch (e) {
+      // Fail silently if tracking is blocked
+    }
   }, []);
 
   const navigate = useCallback((offset) => {
@@ -25,15 +31,24 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
     });
   }, [items.length]);
 
-  const next = useCallback(() => { navigate(1); track("testimonials_next"); }, [navigate, track]);
-  const prev = useCallback(() => { navigate(-1); track("testimonials_prev"); }, [navigate, track]);
+  const next = useCallback(() => { 
+    navigate(1); 
+    track("testimonials_next"); 
+  }, [navigate, track]);
+
+  const prev = useCallback(() => { 
+    navigate(-1); 
+    track("testimonials_prev"); 
+  }, [navigate, track]);
 
   // Autoplay
   useEffect(() => {
     if (paused || items.length <= 1) return;
+    
     timerRef.current = setInterval(() => {
       navigate(1);
     }, interval);
+    
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
@@ -43,12 +58,15 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+    
     const onEnter = () => { setPaused(true); track("testimonials_pause"); };
     const onLeave = () => { setPaused(false); track("testimonials_resume"); };
+    
     el.addEventListener("mouseenter", onEnter);
     el.addEventListener("mouseleave", onLeave);
     el.addEventListener("focusin", onEnter);
     el.addEventListener("focusout", onLeave);
+    
     return () => {
       el.removeEventListener("mouseenter", onEnter);
       el.removeEventListener("mouseleave", onLeave);
@@ -57,12 +75,22 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
     };
   }, [track]);
 
-  // Keyboard navigation
+  // Keyboard navigation (only when container or its children are focused)
   useEffect(() => {
     const onKey = (e) => {
-      if (e.key === "ArrowLeft") { prev(); }
-      if (e.key === "ArrowRight") { next(); }
+      const isFocusedInside = containerRef.current?.contains(document.activeElement);
+      if (!isFocusedInside && document.activeElement !== document.body) return;
+      
+      if (e.key === "ArrowLeft") { 
+        e.preventDefault();
+        prev(); 
+      }
+      if (e.key === "ArrowRight") { 
+        e.preventDefault();
+        next(); 
+      }
     };
+    
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [next, prev]);
@@ -72,7 +100,13 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
   const currentItem = items[index];
 
   return (
-    <section id="testimonials" className="zt-testimonials" aria-label="Client feedback" ref={containerRef}>
+    <section 
+      id="testimonials" 
+      className="zt-testimonials" 
+      aria-label="Client feedback" 
+      role="region"
+      ref={containerRef}
+    >
       <div className="zt-container">
         {/* Fixed height track to prevent layout shifts during mount/unmount */}
         <div className="zt-track">
@@ -92,31 +126,42 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
                 <path d="M4.583 17.321C3.553 16.227 3 15 3 13.011c0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.687 4.145-4.243 5.192 0 .538.074.954.187 1.164.112.21.26.294.507.294.248 0 .396-.084.507-.294.112-.21.187-.626.187-1.164V12h3v5.321H7.583c-.565 0-.995-.158-1.24-.436-.245-.278-.37-.69-.37-1.164v-4.4zm10 0c-1.03-1.094-1.583-2.321-1.583-4.31 0-3.5 2.457-6.637 6.03-8.188l.893 1.378c-3.335 1.804-3.687 4.145-4.243 5.192 0 .538.074.954.187 1.164.112.21.26.294.507.294.248 0 .396-.084.507-.294.112-.21.187-.626.187-1.164V12h3v5.321H17.583c-.565 0-.995-.158-1.24-.436-.245-.278-.37-.69-.37-1.164v-4.4z" />
               </svg>
               <p className="zt-text">"{currentItem.quote}"</p>
-              <footer className="zt-author">— {currentItem.author}</footer>
+              <footer className="zt-author">— {currentItem.author}</footer a>
             </motion.blockquote>
           </AnimatePresence>
         </div>
 
-        <nav className="zt-nav">
-          <button className="zt-btn zt-btn--arrow zt-btn--prev" aria-label="Previous testimonial" onClick={prev}>
+        <nav className="zt-nav" aria-label="Testimonials navigation">
+          <button 
+            className="zt-btn zt-btn--arrow zt-btn--prev" 
+            aria-label="Previous testimonial" 
+            onClick={prev}
+          >
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M15 19l-7-7 7-7"/>
             </svg>
           </button>
 
-          <div className="zt-dots" role="tablist" aria-label="Testimonials navigation">
+          <div className="zt-dots" role="tablist">
             {items.map((item, i) => (
               <button
                 key={item.id}
                 className={`zt-dot ${i === index ? "zt-dot--active" : ""}`}
                 aria-label={`Show testimonial ${i + 1}`}
-                aria-pressed={i === index}
-                onClick={() => { setIndex(i); track("testimonials_dot", `dot_${i + 1}`); }}
+                aria-selected={i === index}
+                onClick={() => { 
+                  setIndex(i); 
+                  track("testimonials_dot", `dot_${i + 1}`); 
+                }}
               />
             ))}
           </div>
 
-          <button className="zt-btn zt-btn--arrow zt-btn--next" aria-label="Next testimonial" onClick={next}>
+          <button 
+            className="zt-btn zt-btn--arrow zt-btn--next" 
+            aria-label="Next testimonial" 
+            onClick={next}
+          >
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 5l7 7-7 7"/>
             </svg>
@@ -129,7 +174,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
       </div>
 
       <style>{`
-        /* Isolated Styles with zt- prefix */
         .zt-testimonials {
           position: relative;
           background: #040508;
@@ -156,7 +200,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
           z-index: 1;
         }
 
-        /* Track wrapper with min-height to reserve space for the card */
         .zt-track {
           position: relative;
           width: 100%;
@@ -167,7 +210,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
           justify-content: center;
         }
 
-        /* Card Styling */
         .zt-card {
           width: 100%;
           max-width: 900px;
@@ -184,7 +226,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
           will-change: opacity, transform;
         }
 
-        /* Icon */
         .zt-quote-icon {
           width: 44px;
           height: 44px;
@@ -192,7 +233,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
           margin-bottom: 1.5rem;
         }
 
-        /* Quote Text */
         .zt-text {
           font-family: Georgia, 'Times New Roman', serif;
           font-size: clamp(1.25rem, 2.5vw, 1.7rem);
@@ -206,7 +246,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
           text-shadow: 0 0 15px rgba(245, 215, 110, 0.1), 0 0 30px rgba(212, 175, 55, 0.05);
         }
 
-        /* Author Name */
         .zt-author {
           font-family: system-ui, sans-serif;
           font-size: 0.85rem;
@@ -222,7 +261,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
           opacity: 0.9;
         }
 
-        /* Navigation Controls */
         .zt-nav {
           display: flex;
           align-items: center;
@@ -257,7 +295,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
           outline-offset: 3px;
         }
 
-        /* Dots */
         .zt-dots { display: flex; gap: 0.65rem; align-items: center; }
         .zt-dot {
           width: 6px;
@@ -277,7 +314,6 @@ export default function Testimonials({ items = DEFAULT_ITEMS, interval = 6000 })
           border-radius: 10px;
         }
 
-        /* Pause Badge */
         .zt-badge {
           position: absolute;
           bottom: -32px;
