@@ -1,20 +1,7 @@
-// src/components/InstagramCard.jsx
+// src/InstagramCard.jsx
 import React from "react";
 
-/**
- * InstagramCard - elevated, luxurious showcase
- * - No visible section title (aria-label used for screen readers)
- * - "Get Catalogue" downloads public/catalogue/zeal-catalogue.pdf
- * - "View Services" scrolls to #work (preserves previous behavior)
- */
 export default function InstagramCard() {
-  const catalogueUrl = "/catalogue/zeal-catalogue.pdf";
-
-  const viewServices = () => {
-    const el = document.getElementById("work");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
   return (
     <>
       <style>{`
@@ -31,7 +18,7 @@ export default function InstagramCard() {
           --lux-text-secondary: #9ca3af;
           --lux-ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
           --lux-trans: 0.5s var(--lux-ease);
-          
+
           position: relative;
           padding: clamp(5rem, 8vw, 8rem) 1.5rem;
           background: radial-gradient(ellipse 140% 90% at 30% 50%, var(--lux-bg-mid) 0%, var(--lux-bg-deep) 65%);
@@ -45,7 +32,7 @@ export default function InstagramCard() {
           content: "";
           position: absolute;
           inset: 0;
-          background-image: url("image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
           background-size: 180px;
           pointer-events: none;
           z-index: 0;
@@ -253,9 +240,9 @@ export default function InstagramCard() {
           <span></span>
           <span></span>
         </div>
-        
+
         <div className="lux-container">
-          <article className="lux-card" tabIndex={0} aria-labelledby="ig-card-title">
+          <article className="lux-card" tabIndex={0} aria-label="Instagram showcase card">
             <figure className="lux-media" aria-hidden="true">
               <img
                 src="/assets/zeal2.png"
@@ -269,17 +256,11 @@ export default function InstagramCard() {
             </figure>
 
             <div className="lux-body">
-              <div className="lux-meta">
-
-
-                <p className="lux-lead">Reels, creative campaigns, and creator partnerships that scale engagement and drive measurable growth.</p>
-              </div>
+              <p className="lux-lead">Reels, creative campaigns, and creator partnerships that scale engagement and drive measurable growth.</p>
 
               <div className="lux-ctas">
                 <a className="lux-btn primary" href="https://www.instagram.com/zeal_web/" target="_blank" rel="noopener noreferrer">Visit Instagram</a>
-                <a className="lux-btn outline" href={catalogueUrl} download="zeal-catalogue.pdf">Get Catalogue</a>
-
-
+                <a className="lux-btn outline" href="/assets/catalogue.pdf" download="zeal-catalogue.pdf">Get Catalogue</a>
               </div>
             </div>
           </article>
