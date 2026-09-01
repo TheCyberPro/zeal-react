@@ -1,3 +1,11 @@
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { UiContext } from "./UiContext";
+
+/**
+ * ExplorePanel (Luxury Edition)
+ *
+ * - Close button pinned to the far right.
+ * - Spacious padding to prevent overlap with top controls.
  * - Refined "Web Development" column spacing.
  * - Gold accents, smooth transitions, and glassmorphism.
  * - Fully accessible focus trap and keyboard navigation.
@@ -137,7 +145,7 @@ export default function ExplorePanel() {
         {/* Main Content Area */}
         <div id="megaMenu" className="mega-menu" role="menu" aria-hidden={!exploreOpen}>
           <div className="mega-inner">
-            
+
             {/* Column 1: Web Development */}
             <MegaColumn
               id="col-web"
@@ -253,7 +261,7 @@ export default function ExplorePanel() {
         .explore-panel {
           position: fixed;
           inset: 0;
-          z-index: 2100; /* Below header, above content */
+          z-index: 2100;
           display: block;
           visibility: hidden;
           opacity: 0;
@@ -294,9 +302,7 @@ export default function ExplorePanel() {
           overflow-x: hidden;
           transform: translateX(100%);
           transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-          
-          /* Spacing Logic */
-          padding: 5rem 3rem 4rem 3rem; /* Top padding clears the close button */
+          padding: 5rem 3rem 4rem 3rem;
         }
         .explore-panel.open .explore-inner {
           transform: translateX(0);
@@ -305,9 +311,9 @@ export default function ExplorePanel() {
         /* Close Button - Far Right */
         .explore-close {
           position: absolute;
-          right: 2rem; /* Far right alignment */
-          top: 2rem;   /* Top alignment */
-          left: auto;  /* Reset any left positioning */
+          right: 2rem;
+          top: 2rem;
+          left: auto;
           width: 48px;
           height: 48px;
           display: flex;
@@ -336,9 +342,8 @@ export default function ExplorePanel() {
 
         .mega-inner {
           display: grid;
-          /* Responsive columns with generous gaps */
           grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-          gap: 3rem; /* Increased spacing between columns */
+          gap: 3rem;
           align-items: start;
         }
 
@@ -419,7 +424,6 @@ export default function ExplorePanel() {
           opacity: 1;
           transform: translateY(0);
         }
-        /* Staggered animation delays */
         .mega-column[aria-expanded="true"] .mega-list li:nth-child(1) { transition-delay: 0.05s; }
         .mega-column[aria-expanded="true"] .mega-list li:nth-child(2) { transition-delay: 0.1s; }
         .mega-column[aria-expanded="true"] .mega-list li:nth-child(3) { transition-delay: 0.15s; }
@@ -457,8 +461,8 @@ export default function ExplorePanel() {
 
         /* Footer Controls */
         .mega-footer-controls {
-          grid-column: 1 / -1; /* Spans full width */
-          margin-top: 4rem;    /* Spacing before next component/footer area */
+          grid-column: 1 / -1;
+          margin-top: 4rem;
           padding-top: 2rem;
           border-top: 1px solid rgba(255, 255, 255, 0.06);
           display: flex;
@@ -510,14 +514,14 @@ export default function ExplorePanel() {
             width: 100%;
             max-width: 100%;
             border-left: none;
-            padding: 6rem 1.5rem 3rem; /* More top padding on mobile */
+            padding: 6rem 1.5rem 3rem;
           }
           .explore-close {
             right: 1rem;
             top: 1rem;
           }
           .mega-inner {
-            grid-template-columns: 1fr; /* Stack columns on mobile */
+            grid-template-columns: 1fr;
             gap: 2rem;
           }
         }
