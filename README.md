@@ -1,16 +1,29 @@
-# React + Vite
+# Zeal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite frontend (`client/`) and Express + SQLite API with an admin panel (`server/`).
 
-Currently, two official plugins are available:
+## Run locally
+```bash
+npm install                          # root (installs concurrently)
+npm run install:all                  # server + client deps
+cp server/.env.example server/.env   # then set JWT_SECRET and ADMIN_* values
+npm run dev                          # API on :4000, site on http://localhost:5173
+```
+Admin: http://localhost:5173/admin. The account is created from `ADMIN_EMAIL` / `ADMIN_PASSWORD` on first start.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Deploy option A: one host (simplest)
+Render, Railway, or Fly.io with a persistent disk.
+- Build command: `npm install && npm run build`
+- Start command: `npm start`
+- Env: `JWT_SECRET`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `DB_PATH=/data/zeal.db` (mount the disk at `/data`)
 
-## React Compiler
+Express serves the built client and the API from the same origin, so no CORS setup is needed.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Deploy option B: client on Vercel, API elsewhere
+1. Deploy the API as in option A.
+2. On Vercel set **Root Directory** to `client` and add `VITE_API_URL=https://your-api-host`.
+3. On the API host set `CLIENT_ORIGIN=https://www.zealweb.xyz`.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Notes
+- The SQLite file lives at `DB_PATH` (default `server/data/zeal.db`). Back it up.
+- Do not run the API on Vercel serverless: the filesystem is ephemeral and the database would be lost.
