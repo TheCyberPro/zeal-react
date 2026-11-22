@@ -1561,8 +1561,8 @@ footer.footer .footer__inner {
   left: 0;
   width: 100%;
   height: 100%;
-  background: center/cover no-repeat url('/assets/zeal1.png');
-  background-image: url('/assets/hero-zeal.png');
+  background: center/cover no-repeat url('/assets/zeal2.png');
+  background-image: url('/assets/zeal2.png');
   filter: brightness(1.1) saturate(1.05);
   opacity: 0.92;
   z-index: 1;
