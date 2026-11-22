@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import { UiProvider } from './components/UiContext.jsx';
-import { AuthProvider } from './components/AuthContext.jsx';
 import Layout from './components/Layout.jsx';
 import Landing from './pages/Landing.jsx';
-import HomePage from './components/Homepage.jsx';
 import Blog from './pages/Blog.jsx';
 import Post from './pages/Post.jsx';
 import Contact from './pages/Contact.jsx';
@@ -30,10 +28,8 @@ export default function App() {
 
   return (
     <UiProvider>
-      <AuthProvider>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route path="/home" element={<HomePage />} />
 
           <Route element={<Layout />}>
             <Route path="/blog" element={<Blog />} />
@@ -45,10 +41,7 @@ export default function App() {
           <Route path="/admin/login" element={<div className="zx"><Login /></div>} />
           <Route path="/admin" element={<div className="zx"><RequireAdmin><Dashboard /></RequireAdmin></div>} />
 
-          {/* Marell routes go back here once Login, Register, Forgot, Calculator,
-              Terms and Privacy are recovered (see the git log command). */}
         </Routes>
-      </AuthProvider>
     </UiProvider>
   );
 }

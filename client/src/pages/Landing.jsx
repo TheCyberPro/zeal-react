@@ -1,6 +1,5 @@
 import Shell from '../components/Shell.jsx';
 import Hero from '../components/Hero.jsx';
-import MarellSection from '../components/MarellSection.jsx';
 import ServicesSlider from '../components/ServicesSlider.jsx';
 import Highlights from '../components/Highlights.jsx';
 import MeetDeveloper from '../components/MeetDeveloper.jsx';
@@ -12,7 +11,6 @@ export default function Landing() {
     <Shell>
       <main style={{ paddingTop: 80 }}>
         <Hero />
-        <div className="container marell-block"><MarellSection /></div>
         <div className="container services-block"><ServicesSlider /></div>
         <div className="container highlights-block"><Highlights /></div>
         <div className="container meet-dev-block"><MeetDeveloper /></div>
