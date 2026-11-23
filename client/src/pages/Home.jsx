@@ -18,8 +18,8 @@ export default function Home() {
   const [services, setServices] = useState(null);
 
   useEffect(() => {
-    api.get('/projects').then(setProjects).catch(() => setProjects([]));
-    api.get('/services').then(setServices).catch(() => setServices([]));
+    api.get('/projects').then((d) => setProjects(Array.isArray(d) ? d : [])).catch(() => setProjects([]));
+    api.get('/services').then((d) => setServices(Array.isArray(d) ? d : [])).catch(() => setServices([]));
   }, []);
 
   return (
