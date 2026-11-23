@@ -10,7 +10,7 @@ import About from './pages/About.jsx';
 import Contact from './pages/Contact.jsx';
 import Login from './pages/admin/Login.jsx';
 import Dashboard from './pages/admin/Dashboard.jsx';
-import { auth } from './lib/api.js';
+import { api, auth } from './lib/api.js';
 
 function RequireAdmin({ children }) {
   return auth.get() ? children : <Navigate to="/admin/login" replace />;
@@ -34,6 +34,12 @@ export default function App() {
     }
     window.scrollTo(0, 0);
   }, [pathname, hash]);
+
+  // Privacy-friendly page counter: sends only the path. Skipped for admin pages and Do Not Track.
+  useEffect(() => {
+    if (pathname.startsWith('/admin') || navigator.doNotTrack === '1') return;
+    api.post('/hit', { path: pathname }).catch(() => {});
+  }, [pathname]);
 
   return (
     <Routes>

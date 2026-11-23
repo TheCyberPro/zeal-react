@@ -1,10 +1,14 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { api } from '../lib/api.js';
+import Booking from './Booking.jsx';
 
 const EMPTY = { name: '', email: '', message: '', website: '' };
 
 export default function Contact() {
-  const [form, setForm] = useState(EMPTY);
+  const [params] = useSearchParams();
+  const demo = !!params.get('demo');
+  const [form, setForm] = useState({ ...EMPTY, message: demo ? "I'd like to book a demo. Here is what I'm planning to build:\n\n" : '' });
   const [status, setStatus] = useState({ state: 'idle', error: '' });
   const set = (k) => (e) => setForm({ ...form, [k]: e.target.value });
 
@@ -20,9 +24,11 @@ export default function Contact() {
     }
   }
 
+  if (demo) return <Booking />;
+
   return (
     <section className="wrap section narrow">
-      <h1>Contact</h1>
+      <h1>{demo ? 'Book a demo' : 'Contact'}</h1>
       {status.state === 'sent' && <p className="notice ok" role="status">Message sent. We'll reply by email.</p>}
       {status.error && <p className="notice err" role="alert">{status.error}</p>}
       <form onSubmit={submit} className="stack">

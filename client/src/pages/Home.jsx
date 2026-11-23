@@ -31,7 +31,7 @@ export default function Home() {
             <h1>Websites and web apps, built to perform.</h1>
             <p className="lede">ZEAL is a web development studio. Design, code, hosting and support, from first sketch to launch.</p>
             <div className="row">
-              <Link className="btn" to="/contact">Start a project</Link>
+              <Link className="btn" to="/contact?demo=1">Book a demo</Link>
               <Link className="btn ghost" to="/work">See our work</Link>
             </div>
           </div>
@@ -112,7 +112,7 @@ export default function Home() {
         <Reveal className="cta-panel">
           <h2>Have a project in mind?</h2>
           <p className="lede">Tell us what you're building. We'll reply by email with next steps.</p>
-          <Link className="btn" to="/contact">Book a free consultation</Link>
+          <Link className="btn" to="/contact?demo=1">Book a demo</Link>
         </Reveal>
       </section>
     </>

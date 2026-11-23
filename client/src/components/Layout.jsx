@@ -1,4 +1,5 @@
 import { NavLink, Outlet, Link } from 'react-router-dom';
+import ChatWidget from './ChatWidget.jsx';
 
 export default function Layout() {
   return (
@@ -13,7 +14,7 @@ export default function Layout() {
             <Link to="/#process">Process</Link>
             <NavLink to="/journal">Journal</NavLink>
             <NavLink to="/about">About</NavLink>
-            <NavLink to="/contact" className="nav-cta">Start a project</NavLink>
+            <NavLink to="/contact?demo=1" className="nav-cta">Book a demo</NavLink>
           </nav>
         </div>
       </header>
@@ -28,6 +29,7 @@ export default function Layout() {
           </span>
         </div>
       </footer>
+      <ChatWidget />
     </>
   );
 }

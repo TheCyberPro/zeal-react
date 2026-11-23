@@ -16,6 +16,17 @@ export default function Project() {
   if (error) return <section className="wrap section narrow"><h1>{error}</h1><Link to="/work">Back to work</Link></section>;
   if (!p) return <section className="wrap section narrow"><p className="muted">Loading…</p></section>;
 
+  if (p.private_view) {
+    return (
+      <section className="wrap section narrow prose">
+        <Link to="/work">Back to work</Link>
+        <h1 className="page-title">{p.title}</h1>
+        <p className="lede">The details of this project are shared in a private walkthrough.</p>
+        <p><Link className="btn" to="/contact?demo=1">Book a demo</Link></p>
+      </section>
+    );
+  }
+
   const tags = String(p.tags || '').split(',').map((t) => t.trim()).filter(Boolean);
 
   return (

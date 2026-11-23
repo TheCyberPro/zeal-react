@@ -64,10 +64,53 @@ CREATE TABLE IF NOT EXISTS messages (
     ['is_demo', 'INTEGER NOT NULL DEFAULT 0'],
     ['anonymous', 'INTEGER NOT NULL DEFAULT 0'],
     ['label', "TEXT NOT NULL DEFAULT ''"],
+    ['private_view', 'INTEGER NOT NULL DEFAULT 0'],
   ]) {
     if (!have.includes(name)) db.exec(`ALTER TABLE projects ADD COLUMN ${name} ${def}`);
   }
 }
+
+db.exec(`
+CREATE TABLE IF NOT EXISTS bookings (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL,
+  notes TEXT NOT NULL DEFAULT '',
+  slot_start TEXT NOT NULL,
+  status TEXT NOT NULL DEFAULT 'requested',
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE UNIQUE INDEX IF NOT EXISTS ux_booking_slot ON bookings(slot_start) WHERE status <> 'cancelled';
+CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT NOT NULL);
+CREATE TABLE IF NOT EXISTS page_views (
+  day TEXT NOT NULL,
+  path TEXT NOT NULL,
+  count INTEGER NOT NULL DEFAULT 0,
+  PRIMARY KEY (day, path)
+);
+`);
+
+db.exec(`
+CREATE TABLE IF NOT EXISTS chat_threads (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  token_hash TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  email TEXT NOT NULL DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'open',
+  unread INTEGER NOT NULL DEFAULT 0,
+  notified_at INTEGER NOT NULL DEFAULT 0,
+  created_at TEXT NOT NULL DEFAULT (datetime('now')),
+  last_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  thread_id INTEGER NOT NULL REFERENCES chat_threads(id) ON DELETE CASCADE,
+  sender TEXT NOT NULL,
+  body TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT (datetime('now'))
+);
+CREATE INDEX IF NOT EXISTS ix_chat_messages ON chat_messages(thread_id, id);
+`);
 
 // Seed the first admin from env if there are no users yet.
 if (!db.prepare('SELECT 1 FROM users LIMIT 1').get()) {

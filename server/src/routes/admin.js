@@ -2,6 +2,8 @@ import { Router } from 'express';
 import bcrypt from 'bcryptjs';
 import db from '../db.js';
 import { requireAuth } from '../middleware/auth.js';
+import { getAvailability, saveAvailability } from '../slots.js';
+import { adminChat } from '../chat.js';
 
 const router = Router();
 router.use(requireAuth);
@@ -77,7 +79,7 @@ router.use(
 );
 router.use(
   '/projects',
-  crud('projects', ['title', 'slug', 'summary', 'body', 'tags', 'year', 'url', 'featured', 'published', 'sort_order', 'is_demo', 'anonymous', 'label'], {
+  crud('projects', ['title', 'slug', 'summary', 'body', 'tags', 'year', 'url', 'featured', 'published', 'sort_order', 'is_demo', 'anonymous', 'label', 'private_view'], {
     order: 'sort_order, id DESC',
     prepare(data, creating) {
       if (data.slug !== undefined || creating) data.slug = slugify(data.slug || data.title || '');
@@ -100,6 +102,7 @@ router.delete('/messages/:id', (req, res) => {
 router.get('/stats', (_req, res) => {
   const count = (sql) => db.prepare(sql).get().n;
   res.json({
+    bookings: count("SELECT COUNT(*) n FROM bookings WHERE status = 'requested'"),
     projects: count('SELECT COUNT(*) n FROM projects WHERE published = 1'),
     posts: count('SELECT COUNT(*) n FROM posts'),
     published: count('SELECT COUNT(*) n FROM posts WHERE published = 1'),
@@ -107,6 +110,36 @@ router.get('/stats', (_req, res) => {
     unread: count('SELECT COUNT(*) n FROM messages WHERE is_read = 0'),
   });
 });
+
+router.get('/availability', (_req, res) => res.json(getAvailability(db)));
+router.put('/availability', (req, res) => {
+  try { res.json(saveAvailability(db, req.body || {})); } catch (e) { res.status(400).json({ error: e.message }); }
+});
+
+router.get('/bookings', (_req, res) => {
+  res.json({ tz: getAvailability(db).tz, rows: db.prepare('SELECT * FROM bookings ORDER BY slot_start DESC').all() });
+});
+router.patch('/bookings/:id', (req, res) => {
+  const status = req.body?.status;
+  if (!['requested', 'confirmed', 'cancelled'].includes(status)) return res.status(400).json({ error: 'Invalid status' });
+  try {
+    db.prepare('UPDATE bookings SET status = ? WHERE id = ?').run(status, req.params.id);
+  } catch (e) {
+    if (String(e.code).startsWith('SQLITE_CONSTRAINT')) return res.status(409).json({ error: 'Another booking already holds that time' });
+    throw e;
+  }
+  res.json({ ok: true });
+});
+
+router.get('/analytics', (_req, res) => {
+  const since = new Date(Date.now() - 13 * 864e5).toISOString().slice(0, 10);
+  res.json({
+    days: db.prepare('SELECT day, SUM(count) AS n FROM page_views WHERE day >= ? GROUP BY day').all(since),
+    top: db.prepare('SELECT path, SUM(count) AS n FROM page_views WHERE day >= ? GROUP BY path ORDER BY n DESC LIMIT 8').all(since),
+  });
+});
+
+router.use('/chat', adminChat);
 
 router.post('/password', (req, res) => {
   const { current, next } = req.body || {};

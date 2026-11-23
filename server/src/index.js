@@ -14,6 +14,7 @@ if (!process.env.JWT_SECRET || process.env.JWT_SECRET === 'change-me') {
 const { default: authRoutes } = await import('./routes/auth.js');
 const { default: publicRoutes } = await import('./routes/public.js');
 const { default: adminRoutes } = await import('./routes/admin.js');
+const { publicChat } = await import('./chat.js');
 
 const app = express();
 app.set('trust proxy', 1);
@@ -28,6 +29,7 @@ app.get('/api/health', (_req, res) => res.json({ ok: true }));
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api', publicRoutes);
+app.use('/api/chat', publicChat);
 app.use('/api', (_req, res) => res.status(404).json({ error: 'Not found' }));
 
 // If the client has been built, serve it from this same server (single-host deploy).

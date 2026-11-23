@@ -3,7 +3,7 @@ import Browser from './Browser.jsx';
 import Cover from './Cover.jsx';
 import Reveal from './Reveal.jsx';
 
-const parts = (p) => [p.is_demo ? 'Concept build' : null, p.year || null, ...String(p.tags || '').split(',').map((t) => t.trim())].filter(Boolean);
+const parts = (p) => p.private_view ? ['Private, shown in a demo'] : [p.is_demo ? 'Concept build' : null, p.year || null, ...String(p.tags || '').split(',').map((t) => t.trim())].filter(Boolean);
 
 export default function WorkList({ items }) {
   return (
