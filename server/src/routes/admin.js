@@ -75,6 +75,15 @@ router.use(
     },
   })
 );
+router.use(
+  '/projects',
+  crud('projects', ['title', 'slug', 'summary', 'body', 'tags', 'year', 'url', 'featured', 'published', 'sort_order', 'is_demo', 'anonymous', 'label'], {
+    order: 'sort_order, id DESC',
+    prepare(data, creating) {
+      if (data.slug !== undefined || creating) data.slug = slugify(data.slug || data.title || '');
+    },
+  })
+);
 router.use('/services', crud('services', ['title', 'description', 'icon', 'sort_order'], { order: 'sort_order, id' }));
 
 // Messages: list, mark read/unread, delete
@@ -91,6 +100,7 @@ router.delete('/messages/:id', (req, res) => {
 router.get('/stats', (_req, res) => {
   const count = (sql) => db.prepare(sql).get().n;
   res.json({
+    projects: count('SELECT COUNT(*) n FROM projects WHERE published = 1'),
     posts: count('SELECT COUNT(*) n FROM posts'),
     published: count('SELECT COUNT(*) n FROM posts WHERE published = 1'),
     services: count('SELECT COUNT(*) n FROM services'),

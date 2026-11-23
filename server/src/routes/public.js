@@ -18,6 +18,28 @@ router.get('/posts/:slug', (req, res) => {
   res.json(post);
 });
 
+// Anonymous projects never expose the real name, slug or link.
+const publicProject = (p) =>
+  p.anonymous ? { ...p, title: p.label || 'Client project', slug: `case-${p.id}`, url: '' } : p;
+
+router.get('/projects', (_req, res) => {
+  res.json(
+    db
+      .prepare('SELECT * FROM projects WHERE published = 1 ORDER BY featured DESC, sort_order, id DESC')
+      .all()
+      .map(publicProject)
+  );
+});
+
+router.get('/projects/:slug', (req, res) => {
+  const m = /^case-(\d+)$/.exec(req.params.slug);
+  const p = m
+    ? db.prepare('SELECT * FROM projects WHERE id = ? AND anonymous = 1 AND published = 1').get(m[1])
+    : db.prepare('SELECT * FROM projects WHERE slug = ? AND anonymous = 0 AND published = 1').get(req.params.slug);
+  if (!p) return res.status(404).json({ error: 'Project not found' });
+  res.json(publicProject(p));
+});
+
 router.get('/services', (_req, res) => {
   res.json(db.prepare('SELECT * FROM services ORDER BY sort_order, id').all());
 });

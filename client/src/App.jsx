@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { UiProvider } from './components/UiContext.jsx';
 import Layout from './components/Layout.jsx';
-import Landing from './pages/Landing.jsx';
-import Blog from './pages/Blog.jsx';
+import Home from './pages/Home.jsx';
+import Work from './pages/Work.jsx';
+import Project from './pages/Project.jsx';
+import Journal from './pages/Journal.jsx';
 import Post from './pages/Post.jsx';
+import About from './pages/About.jsx';
 import Contact from './pages/Contact.jsx';
 import Login from './pages/admin/Login.jsx';
 import Dashboard from './pages/admin/Dashboard.jsx';
@@ -16,7 +18,7 @@ function RequireAdmin({ children }) {
 
 export default function App() {
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
 
   useEffect(() => {
     const out = () => navigate('/admin/login');
@@ -24,24 +26,29 @@ export default function App() {
     return () => window.removeEventListener('zeal-signed-out', out);
   }, [navigate]);
 
-  useEffect(() => window.scrollTo(0, 0), [pathname]);
+  // Scroll to #section if present, otherwise to the top, on navigation only.
+  useEffect(() => {
+    if (hash) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) { el.scrollIntoView(); return; }
+    }
+    window.scrollTo(0, 0);
+  }, [pathname, hash]);
 
   return (
-    <UiProvider>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-
-          <Route element={<Layout />}>
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<Post />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<section className="wrap section"><h1>Page not found</h1></section>} />
-          </Route>
-
-          <Route path="/admin/login" element={<div className="zx"><Login /></div>} />
-          <Route path="/admin" element={<div className="zx"><RequireAdmin><Dashboard /></RequireAdmin></div>} />
-
-        </Routes>
-    </UiProvider>
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/work" element={<Work />} />
+        <Route path="/work/:slug" element={<Project />} />
+        <Route path="/journal" element={<Journal />} />
+        <Route path="/journal/:slug" element={<Post />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<section className="wrap section"><h1>Page not found</h1></section>} />
+      </Route>
+      <Route path="/admin/login" element={<Login />} />
+      <Route path="/admin" element={<RequireAdmin><Dashboard /></RequireAdmin>} />
+    </Routes>
   );
 }

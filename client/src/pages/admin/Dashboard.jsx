@@ -5,6 +5,21 @@ import Manager from './Manager.jsx';
 import Messages from './Messages.jsx';
 import Password from './Password.jsx';
 
+const PROJECT_FIELDS = [
+  { name: 'title', label: 'Title', required: true },
+  { name: 'slug', label: 'URL slug', placeholder: 'Leave blank to generate from the title' },
+  { name: 'summary', label: 'One-line summary', type: 'textarea', rows: 2 },
+  { name: 'body', label: 'Details (blank line between paragraphs)', type: 'textarea', rows: 10 },
+  { name: 'tags', label: 'Tags, separated by commas', placeholder: 'React, Node, SQLite' },
+  { name: 'year', label: 'Year (0 hides it)', type: 'number' },
+  { name: 'url', label: 'Live link (optional)', placeholder: 'https://' },
+  { name: 'sort_order', label: 'Sort order (lowest first)', type: 'number' },
+  { name: 'is_demo', label: 'Concept or demo build (not a real client)', type: 'checkbox' },
+  { name: 'anonymous', label: 'Anonymous: hide the name, link and URL slug on the public site', type: 'checkbox' },
+  { name: 'label', label: 'Public label when anonymous', placeholder: 'e.g. Logistics company website' },
+  { name: 'featured', label: 'Featured (listed first)', type: 'checkbox' },
+  { name: 'published', label: 'Published', type: 'checkbox' },
+];
 const POST_FIELDS = [
   { name: 'title', label: 'Title', required: true },
   { name: 'slug', label: 'URL slug', placeholder: 'Leave blank to generate from the title' },
@@ -15,10 +30,9 @@ const POST_FIELDS = [
 const SERVICE_FIELDS = [
   { name: 'title', label: 'Title', required: true },
   { name: 'description', label: 'Description', type: 'textarea', rows: 4 },
-  { name: 'icon', label: 'Icon (emoji or short text)' },
   { name: 'sort_order', label: 'Sort order (lowest first)', type: 'number' },
 ];
-const TABS = [['overview', 'Overview'], ['posts', 'Posts'], ['services', 'Services'], ['messages', 'Messages'], ['password', 'Password']];
+const TABS = [['overview', 'Overview'], ['projects', 'Projects'], ['posts', 'Journal posts'], ['services', 'Services'], ['messages', 'Messages'], ['password', 'Password']];
 
 export default function Dashboard() {
   const [tab, setTab] = useState('overview');
@@ -30,7 +44,7 @@ export default function Dashboard() {
   return (
     <div className="admin">
       <aside>
-        <strong className="brand">Zeal admin</strong>
+        <strong className="brand">ZEAL admin</strong>
         <nav aria-label="Admin">
           {TABS.map(([id, name]) => (
             <button key={id} className={tab === id ? 'on' : ''} onClick={() => setTab(id)}>
@@ -47,15 +61,17 @@ export default function Dashboard() {
             <h2>Overview</h2>
             {!stats ? <p className="muted">Loading…</p> : (
               <div className="grid">
-                <div className="item"><h3>{stats.published} of {stats.posts}</h3><p>Posts published</p></div>
+                <div className="item"><h3>{stats.projects}</h3><p>Published projects</p></div>
+                <div className="item"><h3>{stats.published} of {stats.posts}</h3><p>Journal posts published</p></div>
                 <div className="item"><h3>{stats.services}</h3><p>Services</p></div>
                 <div className="item"><h3>{stats.unread}</h3><p>Unread messages</p></div>
               </div>
             )}
           </div>
         )}
+        {tab === 'projects' && <Manager resource="projects" label="Project" fields={PROJECT_FIELDS} blank={{ title: '', slug: '', summary: '', body: '', tags: '', year: new Date().getFullYear(), url: '', sort_order: 0, featured: false, published: true, is_demo: false, anonymous: false, label: '' }} />}
         {tab === 'posts' && <Manager resource="posts" label="Post" fields={POST_FIELDS} blank={{ title: '', slug: '', excerpt: '', body: '', published: false }} />}
-        {tab === 'services' && <Manager resource="services" label="Service" fields={SERVICE_FIELDS} blank={{ title: '', description: '', icon: '', sort_order: 0 }} />}
+        {tab === 'services' && <Manager resource="services" label="Service" fields={SERVICE_FIELDS} blank={{ title: '', description: '', sort_order: 0 }} />}
         {tab === 'messages' && <Messages />}
         {tab === 'password' && <Password />}
       </section>
