@@ -36,7 +36,7 @@ export default function Project() {
       <p className="lede">{p.summary}</p>
       <Cover project={p} large />
       {p.is_demo ? <p className="notice ok">This is a concept build created to showcase our work. It is not a live business.</p> : null}
-      {p.anonymous ? <p className="muted">The name and link of this demo are kept private. A live walkthrough is available on request.</p> : null}
+      {p.anonymous ? <p className="muted">Client details are confidential. A live walkthrough is available on request.</p> : null}
       <p className="muted">{[p.year || null, ...tags].filter(Boolean).join(', ')}</p>
       {p.body.split(/\n{2,}/).map((para, i) => <p key={i} style={{ whiteSpace: 'pre-wrap' }}>{para}</p>)}
       {p.url && <p><a className="btn ghost" href={p.url} target="_blank" rel="noopener noreferrer">Visit the project</a></p>}
