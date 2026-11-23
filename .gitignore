@@ -5,3 +5,16 @@ dist
 *.db-wal
 *.db-shm
 .vercel
+
+# env files (real values never committed)
+.env
+server/.env*
+!server/.env.example
+server/data/
+*.db
+
+.env
+server/.env*
+!server/.env.example
+server/data/
+*.db
