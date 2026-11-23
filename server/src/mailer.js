@@ -10,6 +10,7 @@ export async function sendMail({ subject, text, replyTo }) {
     if (process.env.RESEND_API_KEY) {
       const res = await fetch('https://api.resend.com/emails', {
         method: 'POST',
+        signal: AbortSignal.timeout(8000),
         headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({
           from: process.env.MAIL_FROM || 'ZEAL <onboarding@resend.dev>',
