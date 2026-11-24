@@ -108,3 +108,15 @@
 .site-header nav a:not(.nav-cta).active{background:color-mix(in srgb,var(--ink) 10%,transparent);color:var(--ink)}
 .site-header nav .nav-cta{margin-left:.5rem}
 @media (max-width:640px){.wordmark .logo{height:22px}.site-header nav{gap:.1rem}.site-header nav a:not(.nav-cta){padding:.4rem .6rem}.site-header nav .nav-cta{margin-left:.25rem}}
+
+/* Phone nav */
+@media (max-width:640px){
+  .site-header .bar{flex-wrap:nowrap;gap:.75rem;padding:.7rem 0}
+  .site-header nav{flex-wrap:nowrap;white-space:nowrap;margin-left:auto;gap:1rem}
+  .site-header .wordmark{flex-shrink:0}
+  .site-header nav .hide-sm{display:none}
+  .site-header nav .nav-cta{padding:.45rem .95rem;font-size:.92rem}
+}
+@media (max-width:480px){
+  .site-header nav .hide-xs{display:none}
+}
