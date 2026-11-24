@@ -46,4 +46,15 @@ app.use((err, _req, res, _next) => {
 });
 
 const port = process.env.PORT || 4000;
+
+// Serve the built client from the same server (single-host deploy)
+const __path = (await import('node:path')).default;
+const __url = await import('node:url');
+const __dist = __path.resolve(__path.dirname(__url.fileURLToPath(import.meta.url)), '../../client/dist');
+if ((await import('node:fs')).default.existsSync(__dist)) {
+  const __express = (await import('express')).default;
+  app.use(__express.static(__dist));
+  app.get(/^\/(?!api\/).*/, (req, res) => res.sendFile(__path.join(__dist, 'index.html')));
+}
+
 app.listen(port, () => console.log(`API listening on :${port}`));
