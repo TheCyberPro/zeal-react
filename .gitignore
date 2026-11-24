@@ -20,3 +20,4 @@ server/data/
 *.db
 server/.env
 server/data/
+*.log
