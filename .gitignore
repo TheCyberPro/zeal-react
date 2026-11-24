@@ -18,3 +18,5 @@ server/.env*
 !server/.env.example
 server/data/
 *.db
+server/.env
+server/data/
