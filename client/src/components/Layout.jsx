@@ -1,5 +1,6 @@
 import { NavLink, Outlet, Link } from 'react-router-dom';
 import ChatWidget from './ChatWidget.jsx';
+import Logo from './Logo.jsx';
 
 export default function Layout() {
   return (
@@ -7,13 +8,13 @@ export default function Layout() {
       <a className="skip" href="#main">Skip to content</a>
       <header className="site-header">
         <div className="wrap bar">
-          <Link to="/" className="wordmark">ZEAL</Link>
+          <Link to="/" className="wordmark" aria-label="ZEAL home"><Logo /></Link>
           <nav aria-label="Main">
             <NavLink to="/work">Work</NavLink>
-            <Link to="/#services">Services</Link>
-            <Link to="/#process">Process</Link>
-            <NavLink to="/journal">Journal</NavLink>
-            <NavLink to="/about">About</NavLink>
+            <Link to="/#services" className="hide-sm">Services</Link>
+            <Link to="/#process" className="hide-sm">Process</Link>
+            <NavLink to="/journal" className="hide-sm">Journal</NavLink>
+            <NavLink to="/about" className="hide-xs">About</NavLink>
             <NavLink to="/contact?demo=1" className="nav-cta">Book a demo</NavLink>
           </nav>
         </div>
@@ -25,6 +26,7 @@ export default function Layout() {
           <span className="foot-links">
             <a href="/assets/catalogue.pdf">Catalogue (PDF)</a>
             <Link to="/journal">Journal</Link>
+            <Link to="/about">About</Link>
             <Link to="/admin">Admin</Link>
           </span>
         </div>

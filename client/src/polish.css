@@ -92,3 +92,19 @@
 @media (max-width:760px){.work-grid{grid-template-columns:1fr}}
 @media (max-width:520px){.steps{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.pulse{animation:none}.work-card:hover .browser,.work-card:hover .cover-mark,.btn:hover{transform:none}}
+
+/* Slim header on phones */
+@media (max-width:640px){.site-header nav .hide-sm{display:none}}
+@media (max-width:400px){.site-header nav .hide-xs{display:none}}
+@media (max-width:640px){.site-header .bar{flex-wrap:nowrap;gap:.75rem}.site-header nav{flex-wrap:nowrap;white-space:nowrap;margin-left:auto}.site-header .wordmark{flex-shrink:0}}
+
+/* Modern header */
+.wordmark{display:inline-flex;align-items:center;transition:opacity .2s}.wordmark:hover{opacity:.75}
+.wordmark .logo{height:26px;width:auto;display:block;overflow:visible}
+.site-header .bar{padding:.75rem 0}
+.site-header nav{gap:.15rem}
+.site-header nav a:not(.nav-cta){padding:.45rem .85rem;border-bottom:0;border-radius:999px;transition:background .2s,color .2s}
+.site-header nav a:not(.nav-cta):hover{background:color-mix(in srgb,var(--ink) 7%,transparent);color:var(--ink)}
+.site-header nav a:not(.nav-cta).active{background:color-mix(in srgb,var(--ink) 10%,transparent);color:var(--ink)}
+.site-header nav .nav-cta{margin-left:.5rem}
+@media (max-width:640px){.wordmark .logo{height:22px}.site-header nav{gap:.1rem}.site-header nav a:not(.nav-cta){padding:.4rem .6rem}.site-header nav .nav-cta{margin-left:.25rem}}
