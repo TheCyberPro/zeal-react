@@ -58,4 +58,4 @@ export const SERVICES = [
   },
 ];
 
-export const CATALOGUE_URL = '/assets/catalogue.pdf';
+export const CATALOGUE_URL = 'mailto:Zeal.io@outlook.com?subject=Catalogue%20request';

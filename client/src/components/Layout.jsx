@@ -25,7 +25,7 @@ export default function Layout() {
             <Link to="/#process">Process</Link>
             <Link to="/journal">Journal</Link>
             <Link to="/about">About</Link>
-            <a href="/assets/catalogue.pdf">Catalogue (PDF)</a>
+            <a href="mailto:Zeal.io@outlook.com?subject=Catalogue%20request">Request the catalogue</a>
             <Link to="/admin">Admin</Link>
           </span>
         </div>
